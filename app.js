@@ -2,7 +2,7 @@
 // ✍️ 글마중 (Writing Companion) - CORE APPLICATION LOGIC
 // ==========================================================================
 
-// 1. EXTENDED RICH PROMPT DATABASE (HAND-CRAFTED + DYNAMIC COMBINATIONS)
+// 1. EXTENDED PROMPT DATABASE
 const PROMPT_DATABASE = [
     // --- 감성 / 에세이 ---
     {
@@ -142,7 +142,7 @@ const PROMPT_DATABASE = [
         category: '일상/추억',
         start: '낡은 앨범 속 먼지를 털어내자 기억 저편으로 사라졌던 그해 여름의 바다가 펼쳐졌다.',
         continuations: [
-            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴도는 듯했다.',
+            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴오는 듯했다.',
             '시간은 쏜살같이 흘러 많은 것을 바꾸어 놓았지만, 그때의 풋풋했던 마음만은 여전히 쨍쨍하다.',
             '가끔은 돌아갈 수 없는 그 시절의 한 조각이 문득 그리워지는 날이 있다.'
         ]
@@ -303,63 +303,31 @@ const PROMPT_DATABASE = [
     }
 ];
 
-// 2. DYNAMIC COMBINATORIAL ENGINE FOR INFINITE VARIATIONS
-const DYNAMIC_TEMPLATES = {
-    '감성/에세이': [
-        {
-            start: '시간이 비껴간 {장소}의 구석에서, 나는 {감정}을 고스란히 느꼈다.',
-            c1: '{장소}의 조용한 공기 속에 마주한 기억들은 마치 어제 일처럼 또렷했다.',
-            c2: '지나간 시간을 굳이 되돌리려 하지 않아도, 그 온기는 여전히 가슴 깊은 곳에 남아있다.',
-            c3: '오늘도 나는 그 조용한 풍경 속에서 마음의 휴식을 얻는다.'
-        },
-        {
-            start: '{시간}의 빛이 차분히 내려앉자, 하루 동안 날 서 있던 생각들이 동글해졌다.',
-            c1: '복잡했던 머릿속 소음도 차츰 멀어지고 오직 나만의 숨소리만이 아늑하게 남는다.',
-            c2: '누군가의 기대에 부응하려 애쓰지 않아도 되는 오롯한 나만의 서정적 순간이다.',
-            c3: '이 작고 다정한 온기 속에서 내일로 걸어갈 조용한 용기를 얻는다.'
-        }
-    ],
-    '일상/추억': [
-        {
-            start: '{시간}에 우연히 접한 {오감_대상}은 까마득히 잊고 있던 어릴 적 기억을 불러왔다.',
-            c1: '손때 묻은 옛 물건처럼 그 시절의 해맑았던 웃음소리가 바로 귓가에 울리는 듯했다.',
-            c2: '돌아갈 수 없기에 더욱 아련하고 아름다운 그날의 한 조각이 마음을 뭉클하게 한다.',
-            c3: '세월이 흘러 많은 것이 변했어도, 그 선명한 온기만은 여전히 쨍쨍하다.'
-        }
-    ],
-    '소설/창작': [
-        {
-            start: '{장소}에서 흘러나오는 미세한 소리를 포착한 순간, 그는 걸음을 멈춰 섰다.',
-            c1: '어둠 속에서 조용히 모습을 드러낸 그것은 오랫동안 찾아 헤매던 비밀의 열쇠였다.',
-            c2: '손에 쥔 차가운 촛대를 고쳐 쥐며, 그는 한 걸음 어둠 속으로 천천히 다가섰다.',
-            c3: '이제 돌아갈 길은 없었고, 완전히 새로운 운명이 그를 기다리고 있었다.'
-        }
-    ],
-    '질문/생각': [
-        {
-            start: '우리가 진정으로 원했던 것은 {목표_대상}이 아니라, {감정}의 상태가 아니었을까?',
-            c1: '손에 쥔 성취보다 더 소중한 것은 스스로에게 온전히 솔직해질 수 있는 마음이다.',
-            c2: '타인의 시선이라는 겉옷을 벗어던질 때 비로소 진정한 나만의 평온이 찾아온다.',
-            c3: '오늘 밤은 오직 나 자신만을 위한 조용한 응원의 한 문장을 건네어 본다.'
-        }
-    ]
-};
+// 2. DETERMINISTIC SHUFFLED DECK QUEUES FOR ZERO-REPETITION
+let categoryDecks = {};
 
-const WORDS_PLACEHOLDERS = {
-    '장소': ['낡은 카페', '해 질 녘 골목길', '오래된 서점', '새벽의 서재', '비 내리는 창가', '고요한 숲길'],
-    '감정': ['아늑한 평온함', '그리운 안도감', '아련한 다정함', '조용한 온기', '깊은 여운'],
-    '시간': ['해거름 녘', '새벽 세 시', '늦은 저녁', '주말 아침', '노을빛 시각'],
-    '오감_대상': ['고소한 빵 냄새', '바스락거리는 빗소리', '주황빛 가로등', '오래된 종이 향'],
-    '목표_대상': ['거창한 성공', '완벽한 결과', '남들의 인정']
-};
+function getNextPromptFromDeck(category) {
+    if (!categoryDecks[category] || categoryDecks[category].length === 0) {
+        // Build and shuffle new deck
+        let pool = PROMPT_DATABASE;
+        if (category !== 'all') {
+            pool = PROMPT_DATABASE.filter(p => p.category === category);
+        }
+        
+        // Fisher-Yates Shuffle
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
 
-// State Tracking for Prompt Selection
-let promptHistoryIds = [];
+        categoryDecks[category] = shuffled;
+    }
 
-// ==========================================================================
-// 🧠 3. SMART CONTEXTUAL WRITING ADVICE ANALYZER (사용자 작성 글 분석)
-// ==========================================================================
+    return categoryDecks[category].pop();
+}
 
+// 3. SMART USER CONTEXTUAL ADVICE ANALYZER
 const ADVICE_PATTERNS = [
     {
         keywords: ['바람', '하늘', '햇살', '빗소리', '노을', '구름', '비', '눈', '나무', '바다', '꽃', '공기', '냄새', '소리', '빛'],
@@ -479,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSavedCountBadge();
     loadDraftFromLocalStorage();
     updateStats();
-    generatePrompt();
+    renderInitialPromptGuide(); // Show initial guide text
 });
 
 function initElements() {
@@ -549,7 +517,7 @@ function initEventListeners() {
         triggerAutoSaveDraft();
         if (isAdvicePanelOpen) {
             updateAdviceStatusMessage();
-            renderAdviceCards(); // Real-time contextual feedback update
+            renderAdviceCards();
         }
     });
 
@@ -587,80 +555,37 @@ function initCategoryPills() {
             pills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
             currentCategory = pill.getAttribute('data-category');
-            generatePrompt();
+
+            if (currentCategory === 'all') {
+                renderInitialPromptGuide();
+            } else {
+                generatePrompt();
+            }
         });
     });
 }
 
-// ==========================================================================
-// 🎲 NO-REPEAT PROMPT GENERATOR WITH PROCEDURAL COMBINATOR
-// ==========================================================================
-
-function generatePrompt() {
-    let pool = PROMPT_DATABASE;
-    if (currentCategory !== 'all') {
-        pool = PROMPT_DATABASE.filter(p => p.category === currentCategory);
-    }
-
-    // Filter out recently shown IDs
-    let available = pool.filter(p => !promptHistoryIds.includes(p.id));
-
-    if (available.length === 0) {
-        // Reset history for current category
-        const poolIds = pool.map(p => p.id);
-        promptHistoryIds = promptHistoryIds.filter(id => !poolIds.includes(id));
-        available = pool;
-    }
-
-    // Decide whether to use hand-crafted or procedural dynamic template (30% chance for dynamic)
-    const useDynamic = Math.random() < 0.35 && (currentCategory !== 'all' ? DYNAMIC_TEMPLATES[currentCategory] : true);
-
-    let candidate = null;
-
-    if (useDynamic) {
-        const catKeys = currentCategory !== 'all' ? [currentCategory] : Object.keys(DYNAMIC_TEMPLATES);
-        const randCat = catKeys[Math.floor(Math.random() * catKeys.length)];
-        const templates = DYNAMIC_TEMPLATES[randCat];
-
-        if (templates && templates.length > 0) {
-            const tmpl = templates[Math.floor(Math.random() * templates.length)];
-            candidate = buildDynamicPrompt(randCat, tmpl);
-        }
-    }
-
-    if (!candidate) {
-        candidate = available[Math.floor(Math.random() * available.length)];
-        promptHistoryIds.push(candidate.id);
-    }
-
-    currentPrompt = candidate;
+function renderInitialPromptGuide() {
+    currentPrompt = null;
     currentContinuationIndex = 0;
-    renderPromptDisplay();
+    continueStepBadge.style.display = 'none';
+
+    promptDisplayArea.innerHTML = `
+        <p class="prompt-placeholder">
+            아래 <strong>[첫 문장 뽑기]</strong> 버튼을 눌러 글의 첫 문장을 찾아보세요.<br>
+            글쓰기가 어려울 땐 <strong>[+] 버튼</strong>으로 자연스럽게 이어지는 다음 문장도 추가할 수 있어요.
+        </p>
+    `;
 }
 
-function buildDynamicPrompt(category, templateObj) {
-    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+// DETERMINISTIC ZERO-REPETITION PROMPT ENGINE
+function generatePrompt() {
+    const prompt = getNextPromptFromDeck(currentCategory);
+    if (!prompt) return;
 
-    let start = templateObj.start;
-    let c1 = templateObj.c1;
-    let c2 = templateObj.c2;
-    let c3 = templateObj.c3;
-
-    Object.keys(WORDS_PLACEHOLDERS).forEach(key => {
-        const val = pick(WORDS_PLACEHOLDERS[key]);
-        const reg = new RegExp(`{${key}}`, 'g');
-        start = start.replace(reg, val);
-        c1 = c1.replace(reg, val);
-        c2 = c2.replace(reg, val);
-        c3 = c3.replace(reg, val);
-    });
-
-    return {
-        id: 'dyn_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
-        category: category,
-        start: start,
-        continuations: [c1, c2, c3]
-    };
+    currentPrompt = prompt;
+    currentContinuationIndex = 0;
+    renderPromptDisplay();
 }
 
 function renderPromptDisplay() {
@@ -728,10 +653,7 @@ function applyPromptToEditor() {
     showToast('추천 문장이 에디터에 적용되었습니다!');
 }
 
-// ==========================================================================
-// 🧭 ADVICE PANEL & REAL-TIME CONTEXTUAL ADVICE RENDERER
-// ==========================================================================
-
+// ADVICE PANEL & REAL-TIME USER CONTENT-AWARE ADVICE RENDERER
 function toggleAdvicePanel() {
     if (isAdvicePanelOpen) {
         closeAdvicePanel();
@@ -779,14 +701,11 @@ function renderAdviceCards() {
     let matchedCards = [];
 
     if (userText.length > 0) {
-        // Break user text into sentences
         const sentences = userText.split(/(?<=[.!?\n])\s+/).filter(s => s.trim().length > 3);
         
         ADVICE_PATTERNS.forEach(pattern => {
-            // Find matched keywords in user text
             const hasKeyword = pattern.keywords.some(kw => userText.includes(kw));
             if (hasKeyword) {
-                // Find a relevant sentence snippet
                 let snippet = sentences.find(s => pattern.keywords.some(kw => s.includes(kw))) || sentences[sentences.length - 1] || userText.substring(0, 30);
                 if (snippet.length > 35) snippet = snippet.substring(0, 32) + '...';
                 
@@ -800,7 +719,6 @@ function renderAdviceCards() {
         });
     }
 
-    // Fill remaining card slots with default cards if less than 3
     if (matchedCards.length < 3) {
         const remainingNeeded = 3 - matchedCards.length;
         const shuffledDefault = [...DEFAULT_ADVICES].sort(() => 0.5 - Math.random());
@@ -848,10 +766,7 @@ function insertAdviceQuestionToEditor(questionText) {
     showToast('방향 조언 질문이 에디터에 삽입되었습니다.');
 }
 
-// ==========================================================================
-// 📊 STATS & DRAFT MANAGEMENT
-// ==========================================================================
-
+// STATS & DRAFT MANAGEMENT
 function updateStats() {
     const text = editorTextarea.value;
     const lengthWithSpaces = text.length;
@@ -982,7 +897,6 @@ function updateSavedCountBadge() {
     savedCountBadge.textContent = docs.length;
 }
 
-// STORAGE MODAL LOGIC
 function openStorageModal() {
     renderStorageItems();
     storageModal.classList.add('active');
