@@ -1,6 +1,10 @@
-// PROMPT DATABASE WITH SEQUENTIAL CONTINUATIONS (EXTENDED)
+// ==========================================================================
+// ✍️ 글마중 (Writing Companion) - CORE APPLICATION LOGIC
+// ==========================================================================
+
+// 1. EXTENDED RICH PROMPT DATABASE (HAND-CRAFTED + DYNAMIC COMBINATIONS)
 const PROMPT_DATABASE = [
-    // 감성/에세이 Category
+    // --- 감성 / 에세이 ---
     {
         id: 1,
         category: '감성/에세이',
@@ -52,7 +56,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 20,
+        id: 6,
         category: '감성/에세이',
         start: '누군가에게 전하지 못한 문장들은 마음속 깊은 바다 밑바닥에 조약돌처럼 쌓여간다.',
         continuations: [
@@ -62,7 +66,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 21,
+        id: 7,
         category: '감성/에세이',
         start: '새벽 세 시의 침묵은 세상의 모든 소음이 멈추고 오직 내 숨소리만 남는 신비로운 시간이다.',
         continuations: [
@@ -72,7 +76,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 22,
+        id: 8,
         category: '감성/에세이',
         start: '단단하다고 믿었던 마음도 문득 불어오는 작은 바람 하나에 흔들릴 때가 있다.',
         continuations: [
@@ -81,10 +85,30 @@ const PROMPT_DATABASE = [
             '부러지지 않고 유연하게 흔들릴 수 있는 다정함을 나 자신에게 허락해 본다.'
         ]
     },
-
-    // 일상/추억 Category
     {
-        id: 6,
+        id: 9,
+        category: '감성/에세이',
+        start: '창가에 내려앉는 주황빛 노을을 바라보다 문득 내 마음의 온도도 저빛을 닮았으면 했다.',
+        continuations: [
+            '차가운 세상의 속도 속에서도 잃지 않아야 할 것은 타인과 나를 향한 다정한 미소다.',
+            '지나가는 작은 인연마저도 헛되이 보내지 않으려는 마음이 삶을 깊게 가꾸어준다.',
+            '오늘 하루도 다정함이라는 온기를 품은 채 조용히 저녁을 맞이한다.'
+        ]
+    },
+    {
+        id: 10,
+        category: '감성/에세이',
+        start: '낙엽이 뒹구는 거리를 거닐 때면, 지나간 계절들이 저마다의 목소리로 이야기를 건넨다.',
+        continuations: [
+            '치열하게 피어났던 여름의 열기도 이제는 차분한 고요 속으로 자리를 양보하고 있다.',
+            '비워내야만 새로운 봄을 맞이할 수 있다는 자연의 이치가 가슴 깊이 와닿는 순간이다.',
+            '나 역시 가슴속의 헛헛한 미련들을 하나둘 내려놓으며 걸음을 옮긴다.'
+        ]
+    },
+
+    // --- 일상 / 추억 ---
+    {
+        id: 11,
         category: '일상/추억',
         start: '비가 오기 직전의 공기에는 특유의 무겁고 달콤한 흙내음이 섞여 있다.',
         continuations: [
@@ -94,7 +118,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 7,
+        id: 12,
         category: '일상/추억',
         start: '오래된 동네 서점의 서가 사이를 거닐 때면 이상하게 시간이 천천히 흐르는 기분이 든다.',
         continuations: [
@@ -104,7 +128,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 8,
+        id: 13,
         category: '일상/추억',
         start: '주말 아침, 창문 틈 사이로 흘러들어오는 햇살과 고소한 빵 냄새로 눈을 떴다.',
         continuations: [
@@ -114,17 +138,17 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 9,
+        id: 14,
         category: '일상/추억',
         start: '낡은 앨범 속 먼지를 털어내자 기억 저편으로 사라졌던 그해 여름의 바다가 펼쳐졌다.',
         continuations: [
-            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴오는 듯했다.',
+            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴도는 듯했다.',
             '시간은 쏜살같이 흘러 많은 것을 바꾸어 놓았지만, 그때의 풋풋했던 마음만은 여전히 쨍쨍하다.',
             '가끔은 돌아갈 수 없는 그 시절의 한 조각이 문득 그리워지는 날이 있다.'
         ]
     },
     {
-        id: 10,
+        id: 15,
         category: '일상/추억',
         start: '퇴근길 버스 창문에 머리를 기대자 도시의 불빛들이 길게 궤적을 그리며 흘러갔다.',
         continuations: [
@@ -134,17 +158,17 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 23,
+        id: 16,
         category: '일상/추억',
         start: '어머니의 오래된 뚝배기에서 부글부글 끓어오르던 된장찌개 냄새는 집이라는 단어의 다른 이름이었다.',
         continuations: [
             '학교가 끝나고 대문을 열 때면 뿜어져 나오던 그 온기 하나만으로 온 세상의 시름이 날아갔었다.',
             '이제는 멀어져 버린 그 식탁의 풍경이 문득 그리워지는 서늘한 저녁이다.',
-            '음식 하나에 담긴 사랑의 깊이는 세월이 흘러도 절대로 가래앉지 않는 법이다.'
+            '음식 하나에 담긴 사랑의 깊이는 세월이 흘러도 절대로 가라앉지 않는 법이다.'
         ]
     },
     {
-        id: 24,
+        id: 17,
         category: '일상/추억',
         start: '오랜만에 만난 친구의 얼굴에서 풋풋했던 학창 시절의 눈매를 발견하고 반갑게 웃었다.',
         continuations: [
@@ -154,9 +178,9 @@ const PROMPT_DATABASE = [
         ]
     },
 
-    // 소설/창작 Category
+    // --- 소설 / 창작 ---
     {
-        id: 11,
+        id: 18,
         category: '소설/창작',
         start: '마지막 기차가 경적을 울리며 승강장을 떠날 때, 그는 주머니 속 열쇠를 꽉 쥐었다.',
         continuations: [
@@ -166,7 +190,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 12,
+        id: 19,
         category: '소설/창작',
         start: '자정이 되자 저택 중앙 홀의 대형 괘종시계가 열두 번의 둔탁한 종소리를 내뿜었다.',
         continuations: [
@@ -176,7 +200,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 13,
+        id: 20,
         category: '소설/창작',
         start: '바닷가 벼랑 끝에 서 있는 오래된 등대는 단 한 번도 항해사들에게 이름을 알려준 적이 없었다.',
         continuations: [
@@ -186,7 +210,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 14,
+        id: 21,
         category: '소설/창작',
         start: '그 사건이 일어나기 전까지 우리 동네는 지도에서도 찾아보기 힘들 만큼 조용한 시골 마을이었다.',
         continuations: [
@@ -196,7 +220,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 15,
+        id: 22,
         category: '소설/창작',
         start: '벽에 걸린 초상화 속 여인의 눈동자가 미세하게 움직인 것을 감지한 것은 오직 나뿐이었다.',
         continuations: [
@@ -206,7 +230,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 25,
+        id: 23,
         category: '소설/창작',
         start: '그 지도를 손에 넣기 위해 지나온 수천 킬로미터의 거친 여정이 머릿속을 스쳐 지나갔다.',
         continuations: [
@@ -215,20 +239,10 @@ const PROMPT_DATABASE = [
             '긴 숨을 내쉬며 나침반을 고쳐 쥔 채, 어둠 속을 향해 첫 걸음을 내딛었다.'
         ]
     },
-    {
-        id: 26,
-        category: '소설/창작',
-        start: '비가 내리던 밤, 카페 창가 구석 자리에는 늘 정체 모르는 깃털 모자의 사내가 앉아 있었다.',
-        continuations: [
-            '그는 아무 말 없이 검은 노트에 무언가를 빽빽하게 적어 내려가고는 창밖의 사람들을 응시하곤 했다.',
-            '어느 날 밤, 그가 자리를 비운 테이블 위에는 펼쳐진 노트 하나만이 조용히 남아있었다.',
-            '그리고 그 노트의 첫 장에는 놀랍게도 나 자신의 이름이 또렷하게 적혀 있었다.'
-        ]
-    },
 
-    // 질문/생각 Category
+    // --- 질문 / 생각 ---
     {
-        id: 16,
+        id: 24,
         category: '질문/생각',
         start: '만약 과거의 나에게 딱 한 번의 편지를 보낼 수 있다면, 나는 어떤 말을 첫 문장으로 적을까?',
         continuations: [
@@ -238,7 +252,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 17,
+        id: 25,
         category: '질문/생각',
         start: '우리가 진정으로 두려워하는 것은 변화 그 자체가 아니라, 소중한 무언가를 잃는 것은 아닐까?',
         continuations: [
@@ -248,7 +262,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 18,
+        id: 26,
         category: '질문/생각',
         start: '진정한 행복이란 크고 거창한 성취보다, 아주 작고 사소한 일상의 순간들에 숨어 있는 게 아닐까?',
         continuations: [
@@ -258,7 +272,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 19,
+        id: 27,
         category: '질문/생각',
         start: '타인의 시선과 기대라는 무거운 겉옷을 벗어던지고 나면, 과연 진짜 나만의 모습은 무엇일까?',
         continuations: [
@@ -268,7 +282,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 27,
+        id: 28,
         category: '질문/생각',
         start: '실패란 완벽한 끝이 아니라, 더 지혜로운 방식으로 다시 시작할 수 있는 기회가 아닐까?',
         continuations: [
@@ -278,7 +292,7 @@ const PROMPT_DATABASE = [
         ]
     },
     {
-        id: 28,
+        id: 29,
         category: '질문/생각',
         start: '침묵은 아무것도 말하지 않는 공백일까, 아니면 소리보다 더 깊은 언어의 표현일까?',
         continuations: [
@@ -289,13 +303,122 @@ const PROMPT_DATABASE = [
     }
 ];
 
-// Track prompt IDs shown in current category sequence to prevent repetition
-let shownPromptIds = [];
+// 2. DYNAMIC COMBINATORIAL ENGINE FOR INFINITE VARIATIONS
+const DYNAMIC_TEMPLATES = {
+    '감성/에세이': [
+        {
+            start: '시간이 비껴간 {장소}의 구석에서, 나는 {감정}을 고스란히 느꼈다.',
+            c1: '{장소}의 조용한 공기 속에 마주한 기억들은 마치 어제 일처럼 또렷했다.',
+            c2: '지나간 시간을 굳이 되돌리려 하지 않아도, 그 온기는 여전히 가슴 깊은 곳에 남아있다.',
+            c3: '오늘도 나는 그 조용한 풍경 속에서 마음의 휴식을 얻는다.'
+        },
+        {
+            start: '{시간}의 빛이 차분히 내려앉자, 하루 동안 날 서 있던 생각들이 동글해졌다.',
+            c1: '복잡했던 머릿속 소음도 차츰 멀어지고 오직 나만의 숨소리만이 아늑하게 남는다.',
+            c2: '누군가의 기대에 부응하려 애쓰지 않아도 되는 오롯한 나만의 서정적 순간이다.',
+            c3: '이 작고 다정한 온기 속에서 내일로 걸어갈 조용한 용기를 얻는다.'
+        }
+    ],
+    '일상/추억': [
+        {
+            start: '{시간}에 우연히 접한 {오감_대상}은 까마득히 잊고 있던 어릴 적 기억을 불러왔다.',
+            c1: '손때 묻은 옛 물건처럼 그 시절의 해맑았던 웃음소리가 바로 귓가에 울리는 듯했다.',
+            c2: '돌아갈 수 없기에 더욱 아련하고 아름다운 그날의 한 조각이 마음을 뭉클하게 한다.',
+            c3: '세월이 흘러 많은 것이 변했어도, 그 선명한 온기만은 여전히 쨍쨍하다.'
+        }
+    ],
+    '소설/창작': [
+        {
+            start: '{장소}에서 흘러나오는 미세한 소리를 포착한 순간, 그는 걸음을 멈춰 섰다.',
+            c1: '어둠 속에서 조용히 모습을 드러낸 그것은 오랫동안 찾아 헤매던 비밀의 열쇠였다.',
+            c2: '손에 쥔 차가운 촛대를 고쳐 쥐며, 그는 한 걸음 어둠 속으로 천천히 다가섰다.',
+            c3: '이제 돌아갈 길은 없었고, 완전히 새로운 운명이 그를 기다리고 있었다.'
+        }
+    ],
+    '질문/생각': [
+        {
+            start: '우리가 진정으로 원했던 것은 {목표_대상}이 아니라, {감정}의 상태가 아니었을까?',
+            c1: '손에 쥔 성취보다 더 소중한 것은 스스로에게 온전히 솔직해질 수 있는 마음이다.',
+            c2: '타인의 시선이라는 겉옷을 벗어던질 때 비로소 진정한 나만의 평온이 찾아온다.',
+            c3: '오늘 밤은 오직 나 자신만을 위한 조용한 응원의 한 문장을 건네어 본다.'
+        }
+    ]
+};
+
+const WORDS_PLACEHOLDERS = {
+    '장소': ['낡은 카페', '해 질 녘 골목길', '오래된 서점', '새벽의 서재', '비 내리는 창가', '고요한 숲길'],
+    '감정': ['아늑한 평온함', '그리운 안도감', '아련한 다정함', '조용한 온기', '깊은 여운'],
+    '시간': ['해거름 녘', '새벽 세 시', '늦은 저녁', '주말 아침', '노을빛 시각'],
+    '오감_대상': ['고소한 빵 냄새', '바스락거리는 빗소리', '주황빛 가로등', '오래된 종이 향'],
+    '목표_대상': ['거창한 성공', '완벽한 결과', '남들의 인정']
+};
+
+// State Tracking for Prompt Selection
+let promptHistoryIds = [];
+
+// ==========================================================================
+// 🧠 3. SMART CONTEXTUAL WRITING ADVICE ANALYZER (사용자 작성 글 분석)
+// ==========================================================================
+
+const ADVICE_PATTERNS = [
+    {
+        keywords: ['바람', '하늘', '햇살', '빗소리', '노을', '구름', '비', '눈', '나무', '바다', '꽃', '공기', '냄새', '소리', '빛'],
+        category: '📸 오감 & 풍경 묘사 확장',
+        getAdvice: (snippet) => ({
+            question: `작성하신 글 중 "${snippet}" 구절의 풍경 묘사가 정갈하네요!`,
+            hint: '장면 속의 온도나 바람의 촉감, 공간에 감돌던 냄새 중 하나를 한 문장 더 추가해보면 읽는 사람이 더 깊게 몰입합니다.'
+        })
+    },
+    {
+        keywords: ['마음', '슬픔', '행복', '외로움', '기억', '아픔', '눈물', '미소', '그리움', '불안', '걱정', '감정', '두려움', '진심'],
+        category: '🌿 내면 감정 심화',
+        getAdvice: (snippet) => ({
+            question: `글에 담긴 "${snippet}" 마음의 결이 깊게 느껴집니다.`,
+            hint: '그 감정이 처음 일어난 구체적인 사건이나 계기를 조금 더 솔직하게 적어내려가 보세요. 감정의 폭이 한층 풍성해집니다.'
+        })
+    },
+    {
+        keywords: ['친구', '어머니', '아버지', '사람', '그', '그녀', '너', '우리', '말했다', '물었다', '대화', '표정', '손', '얼굴'],
+        category: '💬 인물 서사 & 행동 디테일',
+        getAdvice: (snippet) => ({
+            question: `"${snippet}" 부분에서 인물이나 관계의 생동감이 느껴지네요!`,
+            hint: '그 인물이 지었던 특유의 미세한 손짓이나 눈빛, 혹은 나눴던 짤막한 말 한 토막을 글로 가져와 이어붙여 보세요.'
+        })
+    },
+    {
+        keywords: ['왜', '생각', '만약', '질문', '이유', '깨달음', '의문', '삶', '인생', '의미', '미래', '과거', '선택'],
+        category: '❓ 시각 전환 & 성찰 심화',
+        getAdvice: (snippet) => ({
+            question: `"${snippet}"에 담긴 깊은 생각이 깊은 여운을 줍니다.`,
+            hint: '만약 5년 뒤의 내가 지금의 이 글을 읽는다면 스스로에게 어떤 따뜻한 말을 건넬까요? 그 시선으로 문장을 마무리해보세요.'
+        })
+    }
+];
+
+const DEFAULT_ADVICES = [
+    {
+        category: '🌱 서두 묘사 팁',
+        question: '글의 분위기를 잡기 위해 장소의 빛깔이나 시각을 적어보셨나요?',
+        hint: '창밖의 날씨나 조명의 온도를 서두에 한 조각 얹어주면 글 전체의 분위기가 차분하게 정리됩니다.'
+    },
+    {
+        category: '🔍 인물 행동 묘사',
+        question: '글 속 인물이 멍하니 서 있거나 잔을 만지작거리고 있나요?',
+        hint: '커피잔을 두 손으로 감싸쥐거나 창밖을 응시하는 작은 행동 묘사는 백 마디 말보다 더 깊은 감정을 전달합니다.'
+    },
+    {
+        category: '🏁 글 매듭짓기',
+        question: '오늘의 이 생각을 통해 나 자신에게 건네고 싶은 응원의 한 마디는?',
+        hint: '"그러니 오늘은 이만하면 충분하다", "다음 계절에는 조금 더 다정해지자"처럼 나를 보듬는 문장으로 마무리해 보세요.'
+    }
+];
 
 // APP STATE
 let currentPrompt = null;
 let currentContinuationIndex = 0;
 let currentCategory = 'all';
+let isAdvicePanelOpen = false;
+let currentViewingDoc = null;
 
 // DOM ELEMENTS
 let promptDisplayArea;
@@ -336,46 +459,6 @@ let viewModalContent;
 let btnExportTxt;
 let btnLoadIntoEditor;
 
-// WRITING DIRECTION ADVICE DATABASE
-const ADVICE_DATABASE = [
-    {
-        id: 1,
-        category: '🌿 감정 & 내면 깊이기',
-        question: '지금 이 장면에서 느껴지는 주된 감정은 무엇인가요?',
-        hint: '기쁨, 그리움, 헛헛함, 안도감 등 단 한 단어로 조용히 정의해 보고, 왜 그 마음이 일었는지 연유를 한 문장으로 적어보세요.'
-    },
-    {
-        category: '📸 오감 묘사 덧붙이기',
-        question: '글 속 장소의 소리, 냄새, 눈에 띄는 빛깔은 어떠한가요?',
-        hint: '따뜻한 주황빛 조명, 바스락거리는 서류 소리, 서늘하게 불어오는 바람 등 오감을 자극하는 디테일을 한 조각 더해보세요.'
-    },
-    {
-        category: '💬 인물 & 대화의 도입',
-        question: '이 글의 장면이나 생각에서 떠오르는 인물이 있나요?',
-        hint: '그 사람과 나눴던 짤막한 대화 한 토막이나, 그가 짓던 인상 깊었던 표정을 글로 가져와 풀어보세요.'
-    },
-    {
-        category: '❓ 시각을 바꾸는 질문',
-        question: '만약 5년 뒤의 내가 지금 이 글을 다시 읽는다면 뭐라고 할까요?',
-        hint: '시간의 거리를 살짝 두고 바라보면, 지금의 주저함이나 치열함도 훨씬 유연하고 다정하게 읽힐 것입니다.'
-    },
-    {
-        category: '🏁 의미 정돈 & 마무리',
-        question: '오늘의 이 생각을 통해 나 자신에게 전하고 싶은 메시지는?',
-        hint: '"그러니 오늘은 이만하면 충분하다", "다음 계절에는 조금 더 다정해지자"처럼 스스로를 응원하는 문장으로 정돈해 보세요.'
-    },
-    {
-        category: '☕ 공간 & 시각의 분위기',
-        question: '글이 펼쳐지는 순간의 시각(새벽/노을/한밤)과 공기의 온도는?',
-        hint: '창밖의 날씨나 조명의 온도를 문장 서두에 얹어주면 읽는 사람이 그 분위기에 더 깊이 몰입하게 됩니다.'
-    },
-    {
-        category: '🔍 인물의 구체적 행동',
-        question: '인물이 멍하니 서 있거나 손에 무언가를 감싸쥐고 있나요?',
-        hint: '커피잔을 두 손으로 감싸쥐거나, 연필 끝을 톡톡 치는 식의 작은 행동 묘사는 말보다 더 깊은 감정을 전달합니다.'
-    }
-];
-
 let btnToggleAdvice;
 let advicePanel;
 let btnCloseAdvice;
@@ -385,13 +468,8 @@ let adviceCardsContainer;
 let btnRefreshAdvice;
 let editorLayoutWrapper;
 
-let isAdvicePanelOpen = false;
-
 let toastNotification;
 let toastMessage;
-
-// CURRENT VIEWING DOCUMENT IN MODAL
-let currentViewingDoc = null;
 
 // INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
@@ -401,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSavedCountBadge();
     loadDraftFromLocalStorage();
     updateStats();
+    generatePrompt();
 });
 
 function initElements() {
@@ -442,7 +521,6 @@ function initElements() {
     btnExportTxt = document.getElementById('btn-export-txt');
     btnLoadIntoEditor = document.getElementById('btn-load-into-editor');
 
-    // Advice elements
     btnToggleAdvice = document.getElementById('btn-toggle-advice');
     advicePanel = document.getElementById('advice-panel');
     btnCloseAdvice = document.getElementById('btn-close-advice');
@@ -457,46 +535,33 @@ function initElements() {
 }
 
 function initEventListeners() {
-    // PROMPT GENERATION
     btnGeneratePrompt.addEventListener('click', () => generatePrompt());
     btnRefreshPrompt.addEventListener('click', () => generatePrompt());
     btnContinuePrompt.addEventListener('click', () => addContinuationSentence());
     btnApplyToEditor.addEventListener('click', () => applyPromptToEditor());
 
-    // ADVICE PANEL TOGGLE
-    if (btnToggleAdvice) {
-        btnToggleAdvice.addEventListener('click', () => toggleAdvicePanel());
-    }
-    if (btnCloseAdvice) {
-        btnCloseAdvice.addEventListener('click', () => closeAdvicePanel());
-    }
-    if (btnRefreshAdvice) {
-        btnRefreshAdvice.addEventListener('click', () => renderAdviceCards());
-    }
+    if (btnToggleAdvice) btnToggleAdvice.addEventListener('click', () => toggleAdvicePanel());
+    if (btnCloseAdvice) btnCloseAdvice.addEventListener('click', () => closeAdvicePanel());
+    if (btnRefreshAdvice) btnRefreshAdvice.addEventListener('click', () => renderAdviceCards());
 
-    // EDITOR TYPING & AUTO-SAVE
     editorTextarea.addEventListener('input', () => {
         updateStats();
         triggerAutoSaveDraft();
         if (isAdvicePanelOpen) {
             updateAdviceStatusMessage();
+            renderAdviceCards(); // Real-time contextual feedback update
         }
     });
 
-    documentTitle.addEventListener('input', () => {
-        triggerAutoSaveDraft();
-    });
+    documentTitle.addEventListener('input', () => triggerAutoSaveDraft());
 
-    // EDITOR ACTIONS
     btnClearEditor.addEventListener('click', () => clearEditor());
     btnCopyEditor.addEventListener('click', () => copyEditorContent());
     btnSaveDocument.addEventListener('click', () => saveDocument());
 
-    // HEADER ACTIONS
     btnOpenStorage.addEventListener('click', () => openStorageModal());
     btnNewDocument.addEventListener('click', () => createNewDocument());
 
-    // MODAL CLOSING
     btnCloseStorage.addEventListener('click', () => closeStorageModal());
     storageModal.addEventListener('click', (e) => {
         if (e.target === storageModal) closeStorageModal();
@@ -507,17 +572,166 @@ function initEventListeners() {
         if (e.target === viewModal) closeViewModal();
     });
 
-    // SEARCH IN STORAGE
     storageSearchInput.addEventListener('input', (e) => {
         renderStorageItems(e.target.value.trim());
     });
 
-    // MODAL ACTIONS
     btnExportTxt.addEventListener('click', () => exportCurrentViewingAsTxt());
     btnLoadIntoEditor.addEventListener('click', () => loadCurrentViewingIntoEditor());
 }
 
-// ADVICE PANEL LOGIC
+function initCategoryPills() {
+    const pills = document.querySelectorAll('.category-pill');
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            currentCategory = pill.getAttribute('data-category');
+            generatePrompt();
+        });
+    });
+}
+
+// ==========================================================================
+// 🎲 NO-REPEAT PROMPT GENERATOR WITH PROCEDURAL COMBINATOR
+// ==========================================================================
+
+function generatePrompt() {
+    let pool = PROMPT_DATABASE;
+    if (currentCategory !== 'all') {
+        pool = PROMPT_DATABASE.filter(p => p.category === currentCategory);
+    }
+
+    // Filter out recently shown IDs
+    let available = pool.filter(p => !promptHistoryIds.includes(p.id));
+
+    if (available.length === 0) {
+        // Reset history for current category
+        const poolIds = pool.map(p => p.id);
+        promptHistoryIds = promptHistoryIds.filter(id => !poolIds.includes(id));
+        available = pool;
+    }
+
+    // Decide whether to use hand-crafted or procedural dynamic template (30% chance for dynamic)
+    const useDynamic = Math.random() < 0.35 && (currentCategory !== 'all' ? DYNAMIC_TEMPLATES[currentCategory] : true);
+
+    let candidate = null;
+
+    if (useDynamic) {
+        const catKeys = currentCategory !== 'all' ? [currentCategory] : Object.keys(DYNAMIC_TEMPLATES);
+        const randCat = catKeys[Math.floor(Math.random() * catKeys.length)];
+        const templates = DYNAMIC_TEMPLATES[randCat];
+
+        if (templates && templates.length > 0) {
+            const tmpl = templates[Math.floor(Math.random() * templates.length)];
+            candidate = buildDynamicPrompt(randCat, tmpl);
+        }
+    }
+
+    if (!candidate) {
+        candidate = available[Math.floor(Math.random() * available.length)];
+        promptHistoryIds.push(candidate.id);
+    }
+
+    currentPrompt = candidate;
+    currentContinuationIndex = 0;
+    renderPromptDisplay();
+}
+
+function buildDynamicPrompt(category, templateObj) {
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+    let start = templateObj.start;
+    let c1 = templateObj.c1;
+    let c2 = templateObj.c2;
+    let c3 = templateObj.c3;
+
+    Object.keys(WORDS_PLACEHOLDERS).forEach(key => {
+        const val = pick(WORDS_PLACEHOLDERS[key]);
+        const reg = new RegExp(`{${key}}`, 'g');
+        start = start.replace(reg, val);
+        c1 = c1.replace(reg, val);
+        c2 = c2.replace(reg, val);
+        c3 = c3.replace(reg, val);
+    });
+
+    return {
+        id: 'dyn_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        category: category,
+        start: start,
+        continuations: [c1, c2, c3]
+    };
+}
+
+function renderPromptDisplay() {
+    if (!currentPrompt) return;
+
+    let html = `
+        <div class="prompt-category-tag">${currentPrompt.category}</div>
+        <div class="prompt-text-main">"${escapeHtml(currentPrompt.start)}"</div>
+    `;
+
+    for (let i = 0; i < currentContinuationIndex; i++) {
+        if (currentPrompt.continuations[i]) {
+            html += `<div class="prompt-text-continuation">+ ${escapeHtml(currentPrompt.continuations[i])}</div>`;
+        }
+    }
+
+    promptDisplayArea.innerHTML = html;
+
+    if (currentContinuationIndex > 0) {
+        continueStepBadge.style.display = 'inline-block';
+        continueStepBadge.textContent = `+${currentContinuationIndex}`;
+    } else {
+        continueStepBadge.style.display = 'none';
+    }
+}
+
+function addContinuationSentence() {
+    if (!currentPrompt) {
+        generatePrompt();
+        return;
+    }
+
+    if (currentContinuationIndex < currentPrompt.continuations.length) {
+        currentContinuationIndex++;
+        renderPromptDisplay();
+        showToast(`다음 문장 가이드가 추가되었습니다 (+${currentContinuationIndex})`);
+    } else {
+        showToast('준비된 가이드 문장을 모두 확인하셨습니다. 자유롭게 이어 써 보세요!');
+    }
+}
+
+function applyPromptToEditor() {
+    if (!currentPrompt) {
+        showToast('먼저 [첫 문장 뽑기] 버튼을 눌러 문장을 추천받으세요!');
+        return;
+    }
+
+    let textToApply = currentPrompt.start;
+    for (let i = 0; i < currentContinuationIndex; i++) {
+        if (currentPrompt.continuations[i]) {
+            textToApply += ' ' + currentPrompt.continuations[i];
+        }
+    }
+
+    const currentEditorText = editorTextarea.value;
+    if (currentEditorText.trim().length > 0) {
+        editorTextarea.value = currentEditorText.trim() + '\n\n' + textToApply + ' ';
+    } else {
+        editorTextarea.value = textToApply + ' ';
+    }
+
+    editorTextarea.focus();
+    updateStats();
+    triggerAutoSaveDraft();
+    showToast('추천 문장이 에디터에 적용되었습니다!');
+}
+
+// ==========================================================================
+// 🧭 ADVICE PANEL & REAL-TIME CONTEXTUAL ADVICE RENDERER
+// ==========================================================================
+
 function toggleAdvicePanel() {
     if (isAdvicePanelOpen) {
         closeAdvicePanel();
@@ -545,7 +759,7 @@ function updateAdviceStatusMessage() {
     const textLen = editorTextarea.value.length;
     if (textLen === 0) {
         adviceStatusTag.textContent = '시작 단계';
-        adviceStatusMessage.textContent = '아직 글을 시작하기 전입니다! 추천 문장을 적용하거나 첫 생각을 적은 뒤 조언 카드를 둘러보세요.';
+        adviceStatusMessage.textContent = '아직 글을 작성하기 전입니다! 추천 문장을 적용하거나 첫 생각을 적어보세요.';
     } else if (textLen < 120) {
         adviceStatusTag.textContent = '도입 단계';
         adviceStatusMessage.textContent = '글의 첫 물꼬를 트셨군요! 장면의 풍경이나 그때의 내면 감정을 구체적으로 이어가 보세요.';
@@ -554,18 +768,47 @@ function updateAdviceStatusMessage() {
         adviceStatusMessage.textContent = '이야기가 차곡차곡 쌓이고 있습니다! 인물이나 주변 소리, 냄새 같은 오감의 결을 하나 더 추가해 보세요.';
     } else {
         adviceStatusTag.textContent = '심화 & 마무리 단계';
-        adviceStatusMessage.textContent = '상당한 분량의 글이 완성되어 가네요! 이 생각이 전해주는 조용한 깨달음이나 나 자신에게 하고 싶은 말로 정돈해 보세요.';
+        adviceStatusMessage.textContent = '상당한 분량의 글이 완성되어 가네요! 이 생각이 전해주는 조용한 깨달음이나 내 자신에게 하고 싶은 말로 정돈해 보세요.';
     }
 }
 
 function renderAdviceCards() {
     adviceCardsContainer.innerHTML = '';
-    
-    // Pick 3 random advice cards from database
-    const shuffled = [...ADVICE_DATABASE].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
+    const userText = editorTextarea.value.trim();
 
-    selected.forEach(adv => {
+    let matchedCards = [];
+
+    if (userText.length > 0) {
+        // Break user text into sentences
+        const sentences = userText.split(/(?<=[.!?\n])\s+/).filter(s => s.trim().length > 3);
+        
+        ADVICE_PATTERNS.forEach(pattern => {
+            // Find matched keywords in user text
+            const hasKeyword = pattern.keywords.some(kw => userText.includes(kw));
+            if (hasKeyword) {
+                // Find a relevant sentence snippet
+                let snippet = sentences.find(s => pattern.keywords.some(kw => s.includes(kw))) || sentences[sentences.length - 1] || userText.substring(0, 30);
+                if (snippet.length > 35) snippet = snippet.substring(0, 32) + '...';
+                
+                const adv = pattern.getAdvice(snippet);
+                matchedCards.push({
+                    category: pattern.category,
+                    question: adv.question,
+                    hint: adv.hint
+                });
+            }
+        });
+    }
+
+    // Fill remaining card slots with default cards if less than 3
+    if (matchedCards.length < 3) {
+        const remainingNeeded = 3 - matchedCards.length;
+        const shuffledDefault = [...DEFAULT_ADVICES].sort(() => 0.5 - Math.random());
+        const fill = shuffledDefault.slice(0, remainingNeeded);
+        matchedCards = matchedCards.concat(fill);
+    }
+
+    matchedCards.slice(0, 3).forEach(adv => {
         const card = document.createElement('div');
         card.className = 'advice-card';
         card.innerHTML = `
@@ -605,116 +848,10 @@ function insertAdviceQuestionToEditor(questionText) {
     showToast('방향 조언 질문이 에디터에 삽입되었습니다.');
 }
 
-function initCategoryPills() {
-    const pills = document.querySelectorAll('.category-pill');
-    pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            pills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            currentCategory = pill.getAttribute('data-category');
-            generatePrompt();
-        });
-    });
-}
+// ==========================================================================
+// 📊 STATS & DRAFT MANAGEMENT
+// ==========================================================================
 
-// PROMPT ENGINE LOGIC (NO-REPEAT ALGORITHM)
-function generatePrompt() {
-    let filtered = PROMPT_DATABASE;
-    if (currentCategory !== 'all') {
-        filtered = PROMPT_DATABASE.filter(p => p.category === currentCategory);
-    }
-
-    if (filtered.length === 0) return;
-
-    // Exclude prompts already shown in current category cycle
-    let unshownCandidates = filtered.filter(p => !shownPromptIds.includes(p.id));
-
-    // If all prompts in this category have been viewed, reset tracking for this category
-    if (unshownCandidates.length === 0) {
-        const categoryIds = filtered.map(p => p.id);
-        shownPromptIds = shownPromptIds.filter(id => !categoryIds.includes(id));
-        unshownCandidates = filtered;
-    }
-
-    // Pick random candidate from unshown list
-    const candidate = unshownCandidates[Math.floor(Math.random() * unshownCandidates.length)];
-
-    shownPromptIds.push(candidate.id);
-    currentPrompt = candidate;
-    currentContinuationIndex = 0;
-    renderPromptDisplay();
-}
-
-function renderPromptDisplay() {
-    if (!currentPrompt) return;
-
-    let html = `
-        <div class="prompt-category-tag">${currentPrompt.category}</div>
-        <div class="prompt-text-main">"${escapeHtml(currentPrompt.start)}"</div>
-    `;
-
-    // Render added continuations up to currentContinuationIndex
-    for (let i = 0; i < currentContinuationIndex; i++) {
-        if (currentPrompt.continuations[i]) {
-            html += `<div class="prompt-text-continuation">+ ${escapeHtml(currentPrompt.continuations[i])}</div>`;
-        }
-    }
-
-    promptDisplayArea.innerHTML = html;
-
-    // Update Step Badge
-    if (currentContinuationIndex > 0) {
-        continueStepBadge.style.display = 'inline-block';
-        continueStepBadge.textContent = `+${currentContinuationIndex}`;
-    } else {
-        continueStepBadge.style.display = 'none';
-    }
-}
-
-function addContinuationSentence() {
-    if (!currentPrompt) {
-        // If no prompt yet, generate one first!
-        generatePrompt();
-        return;
-    }
-
-    if (currentContinuationIndex < currentPrompt.continuations.length) {
-        currentContinuationIndex++;
-        renderPromptDisplay();
-        showToast(`다음 문장 가이드가 추가되었습니다 (+${currentContinuationIndex})`);
-    } else {
-        showToast('준비된 가이드 문장을 모두 확인하셨습니다. 자유롭게 이어 써 보세요!');
-    }
-}
-
-function applyPromptToEditor() {
-    if (!currentPrompt) {
-        showToast('먼저 [첫 문장 뽑기] 버튼을 눌러 문장을 추천받으세요!');
-        return;
-    }
-
-    // Build text payload from current prompt state
-    let textToApply = currentPrompt.start;
-    for (let i = 0; i < currentContinuationIndex; i++) {
-        if (currentPrompt.continuations[i]) {
-            textToApply += ' ' + currentPrompt.continuations[i];
-        }
-    }
-
-    const currentEditorText = editorTextarea.value;
-    if (currentEditorText.trim().length > 0) {
-        editorTextarea.value = currentEditorText.trim() + '\n\n' + textToApply + ' ';
-    } else {
-        editorTextarea.value = textToApply + ' ';
-    }
-
-    editorTextarea.focus();
-    updateStats();
-    triggerAutoSaveDraft();
-    showToast('추천 문장이 에디터에 적용되었습니다!');
-}
-
-// EDITOR STATS CALCULATOR
 function updateStats() {
     const text = editorTextarea.value;
     const lengthWithSpaces = text.length;
@@ -728,7 +865,6 @@ function updateStats() {
     statManuscript.textContent = `${manuscript}장`;
 }
 
-// DRAFT & LOCALSTORAGE MANAGEMENT
 let autoSaveTimer = null;
 function triggerAutoSaveDraft() {
     draftStatusIndicator.classList.add('active');
@@ -916,7 +1052,6 @@ window.deleteDocument = function(id) {
     }
 };
 
-// VIEW / EDIT MODAL
 window.openViewModal = function(id) {
     const docs = getSavedDocuments();
     const doc = docs.find(d => d.id === id);
@@ -975,7 +1110,6 @@ function exportCurrentViewingAsTxt() {
     showToast('텍스트(.txt) 파일로 다운로드되었습니다!');
 }
 
-// TOAST HELPER
 let toastTimer = null;
 function showToast(msg) {
     toastMessage.textContent = msg;
@@ -987,7 +1121,6 @@ function showToast(msg) {
     }, 2800);
 }
 
-// ESCAPE HTML UTILITY
 function escapeHtml(str) {
     if (!str) return '';
     return str
