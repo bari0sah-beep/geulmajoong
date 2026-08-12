@@ -1,0 +1,171 @@
+/* Experience Page */
+.pageHero {
+  padding: 56px 0 40px;
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.timelineItem {
+  position: relative;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -28px;
+  top: 20px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.timelineCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.company {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.role {
+  font-size: 14px;
+  color: var(--color-accent);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.period {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.location {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* List */
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listItem {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-secondary);
+  line-height: 1.6;
+}
+
+.bullet {
+  color: var(--color-accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Activities */
+.activitiesSection {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.activityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.activityCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activityHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activityTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
+
+.activityPeriod {
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.activityRole {
+  font-size: 13px;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .activityGrid {
+    grid-template-columns: 1fr;
+  }
+  .cardMeta {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline {
+    padding-left: 20px;
+  }
+  .timelineDot {
+    left: -20px;
+  }
+}

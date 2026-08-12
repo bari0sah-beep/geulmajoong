@@ -1,0 +1,181 @@
+/* About Page */
+.page {
+  background: var(--color-bg);
+}
+
+.pageHero {
+  padding: 56px 0 40px;
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Bio Section */
+.bioGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.profileCard {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.profileName {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.profileRole {
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.profileTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* Bio Right */
+.bioTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.bioPara {
+  font-size: 15px;
+  color: var(--color-secondary);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.infoList {
+  margin-top: 28px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoItem {
+  display: flex;
+  gap: 16px;
+}
+
+.infoLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
+/* Strengths */
+.strengthsSection {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.strengthsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.strengthCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.strengthIcon {
+  font-size: 28px;
+}
+
+.strengthTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.strengthDesc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .bioGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .profileCard {
+    position: static;
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .profileInfo {
+    align-items: flex-start;
+  }
+  .strengthsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .profileInfo {
+    align-items: center;
+  }
+}

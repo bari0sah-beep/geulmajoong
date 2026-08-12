@@ -1,0 +1,116 @@
+/* Skills Page */
+.pageHero {
+  padding: 56px 0 40px;
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Skills Grid */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.skillCard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.skillHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skillIcon {
+  font-size: 24px;
+}
+
+.skillTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.skillItems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skillItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skillMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skillName {
+  font-size: 14px;
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+
+.skillLevel {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.skillTrack {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.skillFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), #7C9CF8);
+  border-radius: 100px;
+}
+
+/* Tools Section */
+.toolsSection {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.toolsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toolBadge {
+  padding: 10px 20px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-secondary);
+  font-family: var(--font-en);
+  transition: all var(--transition);
+}
+
+.toolBadge:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+}

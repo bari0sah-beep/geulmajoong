@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글마중 | 나만의 글쓰기 여정을 돕는 문장 메이트</title>
+    <meta name="description" content="글쓰기가 막힐 때 첫 문장 추천과 순차적 이어쓰기 가이드로 부담 없이 글을 시작해 보세요.">
+    
+    <!-- Google Fonts: Noto Serif KR (문학적 감성), Noto Sans KR (깔끔한 UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-icon">✍️</span>
+                <div class="brand-text">
+                    <h1 class="brand-title">글마중</h1>
+                    <span class="brand-tagline">글의 첫 물꼬를 터주는 문장 도우미</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button type="button" id="btn-open-storage" class="btn btn-secondary">
+                    <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+                    <span>내 글 보관함</span>
+                    <span id="saved-count-badge" class="count-badge">0</span>
+                </button>
+                <button type="button" id="btn-new-document" class="btn btn-outline">
+                    <i data-lucide="file-plus" style="width: 16px; height: 16px;"></i>
+                    <span>새 글 쓰기</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+        <div class="content-container">
+
+            <!-- Prompt Generation Card Section -->
+            <section class="prompt-section card">
+                <div class="prompt-section-header">
+                    <div class="section-badge">
+                        <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> 문장 영감 얻기
+                    </div>
+                    
+                    <!-- Category Selector Pills -->
+                    <div class="category-pills">
+                        <button type="button" class="category-pill active" data-category="all">전체</button>
+                        <button type="button" class="category-pill" data-category="감성/에세이">감성·에세이</button>
+                        <button type="button" class="category-pill" data-category="일상/추억">일상·추억</button>
+                        <button type="button" class="category-pill" data-category="소설/창작">소설·창작</button>
+                        <button type="button" class="category-pill" data-category="질문/생각">질문·생각</button>
+                    </div>
+                </div>
+
+                <!-- Main Prompt Box -->
+                <div class="prompt-box">
+                    <!-- Default Initial Guide Text or Generated Prompt -->
+                    <div id="prompt-display-area" class="prompt-display-area">
+                        <p class="prompt-placeholder">
+                            아래 <strong>[첫 문장 뽑기]</strong> 버튼을 눌러 글의 첫 문장을 찾아보세요.<br>
+                            글쓰기가 어려울 땐 <strong>[+] 버튼</strong>으로 자연스럽게 이어지는 다음 문장도 추가할 수 있어요.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Prompt Control Action Bar -->
+                <div class="prompt-actions">
+                    <div class="action-group-left">
+                        <button type="button" id="btn-generate-prompt" class="btn btn-primary">
+                            <i data-lucide="dice-5" style="width: 18px; height: 18px;"></i>
+                            <span>첫 문장 뽑기</span>
+                        </button>
+                        
+                        <button type="button" id="btn-refresh-prompt" class="btn btn-secondary" title="다른 첫 문장으로 새로고침">
+                            <i data-lucide="rotate-cw" style="width: 16px; height: 16px;"></i>
+                            <span>다른 문장 보기</span>
+                        </button>
+
+                        <button type="button" id="btn-continue-prompt" class="btn btn-accent" title="이어서 어울리는 다음 문장 추가">
+                            <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i>
+                            <span>다음 문장 덧붙이기</span>
+                            <span id="continue-step-badge" class="step-badge" style="display: none;">+1</span>
+                        </button>
+                    </div>
+
+                    <div class="action-group-right">
+                        <button type="button" id="btn-apply-to-editor" class="btn btn-apply">
+                            <i data-lucide="corner-down-left" style="width: 16px; height: 16px;"></i>
+                            <span>에디터에 적용하기</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Editor Section with Optional Advice Sidebar Layout -->
+            <div class="editor-layout-wrapper" id="editor-layout-wrapper">
+                <!-- Main Editor Section -->
+                <section class="editor-section card">
+                    <!-- Editor Top Header / Title Input -->
+                    <div class="editor-header">
+                        <input type="text" id="document-title" class="title-input" placeholder="글 제목을 입력해 보세요..." maxlength="100">
+                        
+                        <div class="editor-header-right">
+                            <button type="button" id="btn-toggle-advice" class="btn btn-advice" title="글 쓰기가 막혔을 때 방향 조언과 힌트를 받습니다">
+                                <i data-lucide="compass" style="width: 16px; height: 16px;"></i>
+                                <span>글쓰기 방향 조언</span>
+                            </button>
+                            <div class="draft-status" id="draft-status-indicator">
+                                <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i>
+                                <span>임시 저장됨</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Textarea Editor -->
+                    <div class="editor-body">
+                        <textarea id="editor-textarea" class="writing-textarea" placeholder="여기에 자유롭게 글을 써 내려가 보세요. 추천받은 첫 문장을 가져와 이어 써도 좋고, 막힐 땐 상단의 '글쓰기 방향 조언' 버튼을 눌러보세요..." spellcheck="false"></textarea>
+                    </div>
+
+                    <!-- Stats Bar & Footer Actions -->
+                    <div class="editor-footer">
+                        <div class="stats-group">
+                            <div class="stat-item" title="공백을 포함한 전체 글자 수">
+                                <span class="stat-label">공백 포함:</span>
+                                <strong id="stat-length-with-spaces" class="stat-value">0자</strong>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item" title="공백을 제외한 글자 수">
+                                <span class="stat-label">공백 제외:</span>
+                                <strong id="stat-length-no-spaces" class="stat-value">0자</strong>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item" title="단어 개수">
+                                <span class="stat-label">단어 수:</span>
+                                <strong id="stat-words" class="stat-value">0개</strong>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item" title="200자 기준 원고지 분량">
+                                <span class="stat-label">원고지:</span>
+                                <strong id="stat-manuscript" class="stat-value">0.0장</strong>
+                            </div>
+                        </div>
+
+                        <div class="editor-actions">
+                            <button type="button" id="btn-clear-editor" class="btn btn-ghost" title="내용 지우기">
+                                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                <span>지우기</span>
+                            </button>
+                            <button type="button" id="btn-copy-editor" class="btn btn-secondary" title="클립보드에 전체 복사">
+                                <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
+                                <span>전체 복사</span>
+                            </button>
+                            <button type="button" id="btn-save-document" class="btn btn-primary">
+                                <i data-lucide="save" style="width: 16px; height: 16px;"></i>
+                                <span>글 저장하기</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Writing Direction Advice Side Panel (Appears on Right/Bottom when activated) -->
+                <aside id="advice-panel" class="advice-panel card">
+                    <div class="advice-panel-header">
+                        <div class="advice-title-group">
+                            <i data-lucide="lightbulb" style="width: 18px; height: 18px; color: var(--color-accent);"></i>
+                            <h3>글쓰기 방향 조언</h3>
+                        </div>
+                        <button type="button" id="btn-close-advice" class="panel-close-btn" title="닫기">&times;</button>
+                    </div>
+
+                    <div class="advice-panel-body">
+                        <!-- Writing Progress Status Prompt -->
+                        <div class="advice-status-box">
+                            <span class="advice-status-tag" id="advice-status-tag">시작 단계</span>
+                            <p id="advice-status-message" class="advice-status-message">
+                                글을 막 작성하는 중이시군요! 아래의 방향 조언 카드를 참고해서 다음 문장을 펼쳐보세요.
+                            </p>
+                        </div>
+
+                        <!-- Direction Recommendations List -->
+                        <div class="advice-cards-container" id="advice-cards-container">
+                            <!-- Injected dynamically via app.js -->
+                        </div>
+                    </div>
+
+                    <div class="advice-panel-footer">
+                        <button type="button" id="btn-refresh-advice" class="btn btn-secondary btn-full">
+                            <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i>
+                            <span>다른 조언 보기</span>
+                        </button>
+                    </div>
+                </aside>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Storage / Saved Writings Modal -->
+    <div id="storage-modal" class="modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i data-lucide="book-marked" style="width: 20px; height: 20px; color: var(--color-primary-dark);"></i>
+                    <h2>내 글 보관함</h2>
+                </div>
+                <button type="button" id="btn-close-storage" class="modal-close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Search Bar -->
+                <div class="storage-search-bar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search" style="width: 16px; height: 16px;" class="search-icon"></i>
+                        <input type="text" id="storage-search-input" placeholder="저장한 글 검색 (제목 또는 내용)...">
+                    </div>
+                </div>
+
+                <!-- Saved Items Grid List -->
+                <div id="storage-items-list" class="storage-items-list">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Read/Edit Modal -->
+    <div id="view-modal" class="modal-backdrop">
+        <div class="modal-card modal-card-large">
+            <div class="modal-header">
+                <span id="view-modal-date" class="view-date-badge">2026. 08. 11</span>
+                <button type="button" id="btn-close-view" class="modal-close-btn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <h2 id="view-modal-title" class="view-title">제목 없음</h2>
+                <div id="view-modal-stats" class="view-stats-text">공백 포함 0자 | 원고지 0장</div>
+                <div id="view-modal-content" class="view-content-box"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="btn-export-txt" class="btn btn-secondary">
+                    <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                    <span>.txt 다운로드</span>
+                </button>
+                <button type="button" id="btn-load-into-editor" class="btn btn-primary">
+                    <i data-lucide="edit-3" style="width: 16px; height: 16px;"></i>
+                    <span>에디터에서 수정하기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast">
+        <span id="toast-message">메시지</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>

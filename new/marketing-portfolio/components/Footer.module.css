@@ -1,0 +1,63 @@
+.footer {
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 32px 0;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.role {
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color var(--transition);
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.copy {
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .copy {
+    width: 100%;
+  }
+}

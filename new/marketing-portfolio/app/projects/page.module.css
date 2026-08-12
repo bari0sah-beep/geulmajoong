@@ -1,0 +1,107 @@
+/* Projects Page */
+.pageHero {
+  padding: 56px 0 40px;
+  background: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.projectList {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.projectMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.period {
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.projectTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
+
+.projectRole {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.projectDesc {
+  font-size: 15px;
+  color: var(--color-secondary);
+  line-height: 1.75;
+}
+
+/* Results */
+.resultsGrid {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.resultItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  background: var(--color-bg-alt);
+  border-right: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.resultItem:last-child {
+  border-right: none;
+}
+
+.resultValue {
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.resultLabel {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .resultsGrid {
+    flex-wrap: wrap;
+  }
+  .resultItem {
+    flex: 1 1 calc(50% - 1px);
+  }
+  .resultItem:nth-child(2) {
+    border-right: none;
+  }
+  .resultItem:nth-child(3) {
+    border-top: 1px solid var(--color-border);
+    border-right: none;
+  }
+}
