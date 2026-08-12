@@ -1,4 +1,4 @@
-// PROMPT DATABASE WITH SEQUENTIAL CONTINUATIONS
+// PROMPT DATABASE WITH SEQUENTIAL CONTINUATIONS (EXTENDED)
 const PROMPT_DATABASE = [
     // 감성/에세이 Category
     {
@@ -51,6 +51,36 @@ const PROMPT_DATABASE = [
             '어둠이 내리기 직전, 이 짧고도 찬란한 시간 속에서 나는 비로소 숨을 깊게 내쉬어 본다.'
         ]
     },
+    {
+        id: 20,
+        category: '감성/에세이',
+        start: '누군가에게 전하지 못한 문장들은 마음속 깊은 바다 밑바닥에 조약돌처럼 쌓여간다.',
+        continuations: [
+            '손끝에 닿을 듯 삼켰던 그 말들은 다듬어지지 않은 채 밤마다 조용히 파도 소리를 낸다.',
+            '언젠가 용기를 내어 꺼내어 놓는다면 그 조약돌은 어떤 빛깔로 반짝이게 될까.',
+            '진심이란 꼭 타인에게 닿지 않더라도, 나 자신을 위로하는 고용한 빛이 되어준다.'
+        ]
+    },
+    {
+        id: 21,
+        category: '감성/에세이',
+        start: '새벽 세 시의 침묵은 세상의 모든 소음이 멈추고 오직 내 숨소리만 남는 신비로운 시간이다.',
+        continuations: [
+            '낮 동안은 바빠서 보살피지 못했던 마음의 어두운 구석을 조용히 불 밝혀 보게 된다.',
+            '창밖의 희미한 가로등 빛 아래로 잊고 있던 어릴 적 기억 하나가 사뿐히 얹힌다.',
+            '어둠이 가장 깊은 이 순간이 어쩌면 내면의 빛이 가장 밝게 빛나는 때일지 모른다.'
+        ]
+    },
+    {
+        id: 22,
+        category: '감성/에세이',
+        start: '단단하다고 믿었던 마음도 문득 불어오는 작은 바람 하나에 흔들릴 때가 있다.',
+        continuations: [
+            '흔들린다는 것은 여전히 내 삶이 살아 숨 쉬고 가슴이 굳어있지 않다는 증거다.',
+            '바람에 서걱거리는 나무처럼, 나 역시 흔들리며 더 깊은 뿌리를 내리는 중일 것이다.',
+            '부러지지 않고 유연하게 흔들릴 수 있는 다정함을 나 자신에게 허락해 본다.'
+        ]
+    },
 
     // 일상/추억 Category
     {
@@ -88,7 +118,7 @@ const PROMPT_DATABASE = [
         category: '일상/추억',
         start: '낡은 앨범 속 먼지를 털어내자 기억 저편으로 사라졌던 그해 여름의 바다가 펼쳐졌다.',
         continuations: [
-            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴도는 듯했다.',
+            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴오는 듯했다.',
             '시간은 쏜살같이 흘러 많은 것을 바꾸어 놓았지만, 그때의 풋풋했던 마음만은 여전히 쨍쨍하다.',
             '가끔은 돌아갈 수 없는 그 시절의 한 조각이 문득 그리워지는 날이 있다.'
         ]
@@ -103,6 +133,26 @@ const PROMPT_DATABASE = [
             '지친 하루의 끝에서 나를 반겨줄 따뜻한 불빛이 있는 곳으로 돌아가는 길이다.'
         ]
     },
+    {
+        id: 23,
+        category: '일상/추억',
+        start: '어머니의 오래된 뚝배기에서 부글부글 끓어오르던 된장찌개 냄새는 집이라는 단어의 다른 이름이었다.',
+        continuations: [
+            '학교가 끝나고 대문을 열 때면 뿜어져 나오던 그 온기 하나만으로 온 세상의 시름이 날아갔었다.',
+            '이제는 멀어져 버린 그 식탁의 풍경이 문득 그리워지는 서늘한 저녁이다.',
+            '음식 하나에 담긴 사랑의 깊이는 세월이 흘러도 절대로 가래앉지 않는 법이다.'
+        ]
+    },
+    {
+        id: 24,
+        category: '일상/추억',
+        start: '오랜만에 만난 친구의 얼굴에서 풋풋했던 학창 시절의 눈매를 발견하고 반갑게 웃었다.',
+        continuations: [
+            '각자의 삶을 살아가느라 바빴지만, 주고받는 몇 마디에 수년의 공백은 이내 사르르 녹아내렸다.',
+            '그 시절 우리가 함께 나눴던 무모하고도 눈부신 꿈 이야기들이 다시금 피어올랐다.',
+            '함께 늙어갈 수 있는 누군가가 곁에 존재한다는 것만으로도 인생은 참 다정하다.'
+        ]
+    },
 
     // 소설/창작 Category
     {
@@ -112,6 +162,135 @@ const PROMPT_DATABASE = [
         continuations: [
             '돌아갈 길은 이제 완전히 끊겼고, 앞에는 오직 낯선 도시의 차가운 불빛들만이 찰렁거렸다.',
             '가방에 든 것은 몇 권의 서류와 낡은 시계뿐이었지만, 그의 표정은 그 어느 때보다 의연했다.',
+            '이제 이 낯선 땅에서 자신만의 새로운 이야기를 다시 써 내려갈 차례였다.'
+        ]
+    },
+    {
+        id: 12,
+        category: '소설/창작',
+        start: '자정이 되자 저택 중앙 홀의 대형 괘종시계가 열두 번의 둔탁한 종소리를 내뿜었다.',
+        continuations: [
+            '마지막 종소리가 묵직하게 잦아들자마자, 닫혀 있던 서재의 문이 끼익 소리를 내며 저절로 열렸다.',
+            '문 너머 어둠 속에서 조용히 걸어 나온 형체는 뜻밖에도 오랫동안 행방불명되었던 그 사람이었다.',
+            '그의 손에 쥐어진 작은 금속 상자에서는 희미하게 푸른빛이 새어 나오고 있었다.'
+        ]
+    },
+    {
+        id: 13,
+        category: '소설/창작',
+        start: '바닷가 벼랑 끝에 서 있는 오래된 등대는 단 한 번도 항해사들에게 이름을 알려준 적이 없었다.',
+        continuations: [
+            '하지만 거친 풍랑 속을 항해하는 사내들에게 그 빛은 생명과도 같은 유일한 이정표였다.',
+            '등대지기 노인은 밤마다 거센 바람을 맞으며 렌즈의 먼지를 조용히 닦아내곤 했다.',
+            '그 빛줄기 하나에 수많은 사람들의 귀환과 생존이 걸려 있음을 누구보다 잘 알고 있었기 때문이다.'
+        ]
+    },
+    {
+        id: 14,
+        category: '소설/창작',
+        start: '그 사건이 일어나기 전까지 우리 동네는 지도에서도 찾아보기 힘들 만큼 조용한 시골 마을이었다.',
+        continuations: [
+            '오래된 방앗간 뒤편의 고요했던 숲속에서 정체불명의 빛과 소리가 관측되기 시작한 것은 지난주였다.',
+            '마을 사람들은 하나둘 동요하기 시작했고, 조용했던 일상에는 미세한 균열이 생기기 시작했다.',
+            '그리고 마침내 그날 밤, 숲의 가장 깊은 곳에서 첫 번째 비밀의 문이 열렸다.'
+        ]
+    },
+    {
+        id: 15,
+        category: '소설/창작',
+        start: '벽에 걸린 초상화 속 여인의 눈동자가 미세하게 움직인 것을 감지한 것은 오직 나뿐이었다.',
+        continuations: [
+            '촛불이 흐릿하게 흔들리는 가운데, 그림 속 여인은 마치 무언가를 경고하려는 듯 붉은 입술을 벙긋거렸다.',
+            '차갑고 불길한 한기가 거실 전체를 덮쳤고, 방안의 모든 시계들이 일제히 멈춰 섰다.',
+            '나는 떨리는 손으로 촛대를 쥔 채 그림 앞으로 한 걸음 천천히 다가섰다.'
+        ]
+    },
+    {
+        id: 25,
+        category: '소설/창작',
+        start: '그 지도를 손에 넣기 위해 지나온 수천 킬로미터의 거친 여정이 머릿속을 스쳐 지나갔다.',
+        continuations: [
+            '지도 표면에 새겨진 고대 문자들은 월광 아래에서 신비로운 은빛으로 밝게 출렁였다.',
+            '전설로만 전해지던 잃어버린 지하 도시의 입구가 비로소 내 발 밑에서 소리를 내며 열렸다.',
+            '긴 숨을 내쉬며 나침반을 고쳐 쥔 채, 어둠 속을 향해 첫 걸음을 내딛었다.'
+        ]
+    },
+    {
+        id: 26,
+        category: '소설/창작',
+        start: '비가 내리던 밤, 카페 창가 구석 자리에는 늘 정체 모르는 깃털 모자의 사내가 앉아 있었다.',
+        continuations: [
+            '그는 아무 말 없이 검은 노트에 무언가를 빽빽하게 적어 내려가고는 창밖의 사람들을 응시하곤 했다.',
+            '어느 날 밤, 그가 자리를 비운 테이블 위에는 펼쳐진 노트 하나만이 조용히 남아있었다.',
+            '그리고 그 노트의 첫 장에는 놀랍게도 나 자신의 이름이 또렷하게 적혀 있었다.'
+        ]
+    },
+
+    // 질문/생각 Category
+    {
+        id: 16,
+        category: '질문/생각',
+        start: '만약 과거의 나에게 딱 한 번의 편지를 보낼 수 있다면, 나는 어떤 말을 첫 문장으로 적을까?',
+        continuations: [
+            '지나온 길의 수많은 시행착오와 눈물을 미리 경고해 주고 싶을까, 아니면 다 괜찮을 거라고 안아줄까.',
+            '어쩌면 용기를 잃고 방황하던 그날의 나에게 주저하지 말고 스스로를 믿으라 적을지도 모른다.',
+            '결국 어떤 선택을 하든 그 모든 과정이 지금의 소중한 나를 만들어냈음을 비로소 깨닫는다.'
+        ]
+    },
+    {
+        id: 17,
+        category: '질문/생각',
+        start: '우리가 진정으로 두려워하는 것은 변화 그 자체가 아니라, 소중한 무언가를 잃는 것은 아닐까?',
+        continuations: [
+            '익숙함이라는 울타리 안은 안락하지만, 새로운 시작은 늘 가슴 뛰는 불확실성을 동반한다.',
+            '손에 쥔 것을 내려놓아야만 새로운 가능성을 비로소 두 손 가득 담을 수 있다는 사실을 잊곤 한다.',
+            '용기란 두려움이 없는 것이 아니라, 두려움에도 불구하고 한 걸음 내딛는 마음이다.'
+        ]
+    },
+    {
+        id: 18,
+        category: '질문/생각',
+        start: '진정한 행복이란 크고 거창한 성취보다, 아주 작고 사소한 일상의 순간들에 숨어 있는 게 아닐까?',
+        continuations: [
+            '갓 볶아낸 커피의 고소한 향기, 해 질 녘 바람에 흔들리는 나뭇잎 소리 같은 미세한 기쁨들 말이다.',
+            '목표를 향해 쉼 없이 달리느라 바로 곁에 있던 소중한 온기들을 놓치고 살았던 것은 아닌지 돌아보게 된다.',
+            '행복은 발견되는 것이 아니라, 지금 이 순간의 다정함을 깨닫는 마음의 시선에서 태어난다.'
+        ]
+    },
+    {
+        id: 19,
+        category: '질문/생각',
+        start: '타인의 시선과 기대라는 무거운 겉옷을 벗어던지고 나면, 과연 진짜 나만의 모습은 무엇일까?',
+        continuations: [
+            '세상이 요구하는 역할과 기준에 맞추느라 오랜 시간 스스로의 진짜 목소리를 잊고 살았는지도 모른다.',
+            '남들에게 증명해 보이기 위한 삶이 아닌, 나 스스로가 만족하고 솔직해질 수 있는 삶을 꿈꿔본다.',
+            '오늘 밤은 다른 누구도 아닌, 오직 나 자신만을 위한 조용한 문장을 하나 적어본다.'
+        ]
+    },
+    {
+        id: 27,
+        category: '질문/생각',
+        start: '실패란 완벽한 끝이 아니라, 더 지혜로운 방식으로 다시 시작할 수 있는 기회가 아닐까?',
+        continuations: [
+            '한번 좌절했다고 해서 내가 걸어온 온 여정이 무가치해지는 것은 결코 아니다.',
+            '넘어졌던 그 자리에서 찾아낸 작은 깨달음 하나가 다가올 길을 밝혀주는 등불이 된다.',
+            '실패의 아픔 속에서도 배움을 건져 올릴 수 있다면 그것이야말로 진정한 성장이다.'
+        ]
+    },
+    {
+        id: 28,
+        category: '질문/생각',
+        start: '침묵은 아무것도 말하지 않는 공백일까, 아니면 소리보다 더 깊은 언어의 표현일까?',
+        continuations: [
+            '수많은 말들이 가득 찬 소란스러운 세상 속에서 때로는 고요한 침묵이 더 큰 위로를 전한다.',
+            '서로 아무런 말을 하지 않아도 편안함을 느낄 수 있는 사람이 곁에 있다는 건 커다란 축복이다.',
+            '침묵의 시간에 비로소 마음의 수면이 조용히 평정을 되찾는다.'
+        ]
+    }
+];
+
+// Track prompt IDs shown in current category sequence to prevent repetition
+let shownPromptIds = []; 의연했다.',
             '이제 이 낯선 땅에서 자신만의 새로운 이야기를 다시 써 내려갈 차례였다.'
         ]
     },
@@ -524,7 +703,7 @@ function initCategoryPills() {
     });
 }
 
-// PROMPT ENGINE LOGIC
+// PROMPT ENGINE LOGIC (NO-REPEAT ALGORITHM)
 function generatePrompt() {
     let filtered = PROMPT_DATABASE;
     if (currentCategory !== 'all') {
@@ -533,16 +712,20 @@ function generatePrompt() {
 
     if (filtered.length === 0) return;
 
-    // Pick random prompt (ensure it's not identical to current if possible)
-    let candidate;
-    if (filtered.length > 1 && currentPrompt) {
-        do {
-            candidate = filtered[Math.floor(Math.random() * filtered.length)];
-        } while (candidate.id === currentPrompt.id);
-    } else {
-        candidate = filtered[Math.floor(Math.random() * filtered.length)];
+    // Exclude prompts already shown in current category cycle
+    let unshownCandidates = filtered.filter(p => !shownPromptIds.includes(p.id));
+
+    // If all prompts in this category have been viewed, reset tracking for this category
+    if (unshownCandidates.length === 0) {
+        const categoryIds = filtered.map(p => p.id);
+        shownPromptIds = shownPromptIds.filter(id => !categoryIds.includes(id));
+        unshownCandidates = filtered;
     }
 
+    // Pick random candidate from unshown list
+    const candidate = unshownCandidates[Math.floor(Math.random() * unshownCandidates.length)];
+
+    shownPromptIds.push(candidate.id);
     currentPrompt = candidate;
     currentContinuationIndex = 0;
     renderPromptDisplay();
