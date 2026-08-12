@@ -797,23 +797,52 @@ body {
     }
 
     .category-pill {
+    .main-wrapper {
+        padding: 14px 12px;
+    }
+
+    .content-container {
+        gap: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .prompt-section {
+        padding: 16px 14px;
+    }
+
+    .prompt-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .category-pills {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .category-pill {
         flex-shrink: 0;
         font-size: 0.78rem;
         padding: 5px 12px;
     }
 
     .prompt-box {
-        padding: 16px;
-        min-height: 100px;
+        padding: 14px 12px;
+        min-height: 90px;
     }
 
     .prompt-text-main {
-        font-size: 1.05rem;
+        font-size: 1rem;
+        line-height: 1.55;
     }
 
     .prompt-text-continuation {
-        font-size: 0.95rem;
-        padding-left: 12px;
+        font-size: 0.9rem;
+        padding-left: 10px;
     }
 
     .prompt-actions {
@@ -838,24 +867,54 @@ body {
         font-size: 0.9rem;
     }
 
+    /* Mobile Optimized Writing Editor Area */
     .editor-section {
-        padding: 18px 16px;
+        padding: 16px 12px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .editor-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+
+    .editor-header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-advice {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 12px;
+        font-size: 0.85rem;
     }
 
     .title-input {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .writing-textarea {
-        min-height: 240px;
-        padding: 16px;
-        font-size: 1.02rem;
+        min-height: 220px;
+        padding: 14px 12px;
+        font-size: 16px; /* 16px prevents automatic browser zooming on mobile Safari/Chrome */
+        line-height: 1.65;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 10px;
     }
 
     .editor-footer {
         flex-direction: column;
         align-items: stretch;
-        gap: 14px;
+        gap: 12px;
+        padding-top: 12px;
     }
 
     .stats-group {
@@ -863,9 +922,10 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
         background-color: var(--bg-card-hover);
-        padding: 12px;
+        padding: 10px 12px;
         border-radius: 10px;
         width: 100%;
+        box-sizing: border-box;
     }
 
     .stat-divider {
@@ -885,14 +945,14 @@ body {
 
     .editor-actions .btn {
         flex: 1;
-        padding: 10px 8px;
-        font-size: 0.82rem;
+        padding: 10px 6px;
+        font-size: 0.8rem;
         min-height: 42px;
     }
 
     /* Modal Mobile Adjustments */
     .modal-backdrop {
-        padding: 12px;
+        padding: 10px;
     }
 
     .modal-card {
@@ -901,7 +961,7 @@ body {
     }
 
     .modal-header, .modal-body, .modal-footer {
-        padding: 16px;
+        padding: 14px;
     }
 
     .modal-footer {
@@ -915,7 +975,7 @@ body {
     }
 
     .storage-item-card {
-        padding: 14px;
+        padding: 12px;
     }
 
     .storage-item-footer {
@@ -932,10 +992,25 @@ body {
 
 @media (max-width: 480px) {
     .brand-title {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
     .brand-tagline {
-        font-size: 0.72rem;
+        display: none; /* Hide tagline on very small screens for cleaner header */
+    }
+    .app-header {
+        padding: 12px 14px;
+    }
+    .header-actions .btn span {
+        display: none; /* Icon-only on extra small screens */
+    }
+    .header-actions .btn {
+        padding: 8px 10px;
+    }
+    .count-badge {
+        margin-left: 2px;
+    }
+    .writing-textarea {
+        min-height: 200px;
     }
 }
 
