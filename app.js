@@ -1,437 +1,384 @@
 // ==========================================================================
-// ✍️ 글마중 (Writing Companion) - CORE APPLICATION LOGIC
-// 🚀 300+ SUPER IMAGINATIVE PROMPT BANK & ZERO-REPETITION ENGINE
+// ✍️ 글마중 - MEGA IMAGINATION ENGINE
+// 항목당 1000개+ 완전 새로운 문장 보장 (다중 템플릿 × 대용량 어휘 뱅크)
 // ==========================================================================
 
-// 1. BASE HAND-CRAFTED CORE PROMPTS (기본 영감 문장 뱅크)
-const BASE_PROMPTS = [
-    // --- 감성 / 에세이 ---
-    {
-        category: '감성/에세이',
-        start: '오래된 노트를 펼쳤을 때 제일 먼저 풍긴 것은 지나간 계절의 냄새였다.',
-        continuations: [
-            '마치 잊고 있던 누군가의 편지가 툭 떨어질 것만 같은 아련함이 몰려왔다.',
-            '연필로 꾹꾹 눌러 쓴 서툰 문장들 속에서, 그 시절의 내가 조용히 나를 바라보고 있었다.',
-            '그때는 미처 알지 못했던 서툼마저도 지금 보니 참 따뜻하게 느껴진다.'
-        ]
-    },
-    {
-        category: '감성/에세이',
-        start: '마음이 조용히 가라앉는 저녁이면, 나는 나 자신에게 조용히 안부를 묻는다.',
-        continuations: [
-            '오늘 하루도 참 고생 많았다고, 굳이 세상의 속도에 맞추려 애쓰지 않아도 괜찮다고.',
-            '따뜻한 차 한 잔을 비워낼 즈음이면 세상의 소음도 조금씩 멀어져 간다.',
-            '이 조용한 서정의 시간이야말로 나를 온전히 회복시키는 유일한 쉼터다.'
-        ]
-    },
-    {
-        category: '감성/에세이',
-        start: '모든 비밀은 가장 은밀한 서랍이 아닌, 가장 평범한 일상의 표정에 숨겨져 있다.',
-        continuations: [
-            '스치듯 지어 보이는 미소 뒤에 숨겨진 진심을 알아채는 사람은 그리 많지 않다.',
-            '우리는 저마다 말하지 못한 이야기들을 가슴 깊은 곳에 묻어둔 채 살아간다.',
-            '어쩌면 글을 쓴다는 것은 그 말 못한 다정함들을 꺼내어 밝혀주는 작업일지도 모른다.'
-        ]
-    },
-    {
-        category: '감성/에세이',
-        start: '어떤 이별은 소리 없이 찾아와 가슴 한구석에 조용한 침묵의 빈자리를 남긴다.',
-        continuations: [
-            '커피잔 위에 맴도는 온기처럼, 다정했던 기억들은 여전히 스러지지 않은 채 잔향으로 남았다.',
-            '슬픔이란 단지 아픔이 아니라, 한때 간직했던 깊은 애정의 증거였음을 이제는 안다.',
-            '비워진 자리에는 언젠가 더 따스하고 견고한 새로운 계절이 채워질 것이다.'
-        ]
-    },
-    {
-        category: '감성/에세이',
-        start: '해가 기우는 골목길을 걷다 보면, 노을빛이 세상의 모든 모서리를 동글동글하게 마감해 준다.',
-        continuations: [
-            '낮 동안 뾰족하게 날 서 있던 마음의 앙금도 그 따스한 붉은빛 속으로 천천히 녹아내린다.',
-            '지나가는 사람들의 지친 어깨 위로 쏟아지는 주황빛 햇살이 왠지 모를 위로를 건네는 듯하다.',
-            '어둠이 내리기 직전, 이 짧고도 찬란한 시간 속에서 나는 비로소 숨을 깊게 내쉬어 본다.'
-        ]
-    },
-    {
-        category: '감성/에세이',
-        start: '누군가에게 전하지 못한 문장들은 마음속 깊은 바다 밑바닥에 조약돌처럼 쌓여간다.',
-        continuations: [
-            '손끝에 닿을 듯 삼켰던 그 말들은 다듬어지지 않은 채 밤마다 조용히 파도 소리를 낸다.',
-            '언젠가 용기를 내어 꺼내어 놓는다면 그 조약돌은 어떤 빛깔로 반짝이게 될까.',
-            '진심이란 꼭 타인에게 닿지 않더라도, 나 자신을 위로하는 고용한 빛이 되어준다.'
-        ]
-    },
+// ═══════════════════════════════════════════════════════════════════════════
+// 1. MEGA SENTENCE GENERATION ENGINE
+// ═══════════════════════════════════════════════════════════════════════════
 
-    // --- 일상 / 추억 ---
-    {
-        category: '일상/추억',
-        start: '비가 오기 직전의 공기에는 특유의 무겁고 달콤한 흙내음이 섞여 있다.',
-        continuations: [
-            '창문을 조금 열어두자 서늘한 바람이 습기를 한껏 머금은 채 조용히 들어왔다.',
-            '문득 어릴 적 우산도 없이 주택가 골목길을 마구 달렸던 여름날의 빗소리가 떠올랐다.',
-            '그때 신발 속으로 찰랑이며 스며들던 빗물의 축축함마저도 참 싱그러운 기억이었다.'
-        ]
-    },
-    {
-        category: '일상/추억',
-        start: '오래된 동네 서점의 서가 사이를 거닐 때면 이상하게 시간이 천천히 흐르는 기분이 든다.',
-        continuations: [
-            '종이가 품고 있는 묵직한 시간이 수많은 사람들의 생각과 함께 차곡차곡 쌓여 있기 때문일까.',
-            '우연히 펼쳐 든 책장 사이에서 발견한 이전 독자의 메모 하나가 작은 울림을 주었다.',
-            '얼굴도 모르는 누군가와 같은 문장에서 멈춰 섰을 생각을 하니 미소가 머물렀다.'
-        ]
-    },
-    {
-        category: '일상/추억',
-        start: '주말 아침, 창문 틈 사이로 흘러들어오는 햇살과 고소한 빵 냄새로 눈을 떴다.',
-        continuations: [
-            '알람 소리에 떠밀리듯 일어나는 평일과 달리, 온전히 내 의지로 맞이하는 한가로운 아침이다.',
-            '따뜻하게 데운 우유 한 잔을 곁들이며 창밖으로 부지런히 움직이는 거리의 풍경을 바라본다.',
-            '이 작은 여유 하나만으로도 다가올 한 주를 견뎌낼 에너지가 온몸으로 충전되는 듯하다.'
-        ]
-    },
-    {
-        category: '일상/추억',
-        start: '낡은 앨범 속 먼지를 털어내자 기억 저편으로 사라졌던 그해 여름의 바다가 펼쳐졌다.',
-        continuations: [
-            '사진 속 어리고 해맑았던 우리들의 미소 위로 자갈밭을 치고 나가던 파도 소리가 귀에 맴오는 듯했다.',
-            '시간은 쏜살같이 흘러 많은 것을 바꾸어 놓았지만, 그때의 풋풋했던 마음만은 여전히 쨍쨍하다.',
-            '가끔은 돌아갈 수 없는 그 시절의 한 조각이 문득 그리워지는 날이 있다.'
-        ]
-    },
-    {
-        category: '일상/추억',
-        start: '퇴근길 버스 창문에 머리를 기대자 도시의 불빛들이 길게 궤적을 그리며 흘러갔다.',
-        continuations: [
-            '수많은 사람들이 저마다의 일상을 뒤로한 채 하루를 마무리하기 위해 집으로 향하고 있었다.',
-            '고단했던 하루의 무게를 잠시 내려놓고 이어폰 너머 흘러나오는 노래에 마음을 맡겨본다.',
-            '지친 하루의 끝에서 나를 반겨줄 따뜻한 불빛이 있는 곳으로 돌아가는 길이다.'
-        ]
-    },
+const MEGA_ENGINE = {
 
-    // --- 소설 / 창작 (상상력 무한 자극) ---
-    {
-        category: '소설/창작',
-        start: '마지막 기차가 경적을 울리며 승강장을 떠날 때, 그는 주머니 속 열쇠를 꽉 쥐었다.',
-        continuations: [
-            '돌아갈 길은 이제 완전히 끊겼고, 앞에는 오직 낯선 도시의 차가운 불빛들만이 찰렁거렸다.',
-            '가방에 든 것은 몇 권의 서류와 낡은 시계뿐이었지만, 그의 표정은 그 어느 때보다 의연했다.',
-            '이제 이 낯선 땅에서 자신만의 새로운 이야기를 다시 써 내려갈 차례였다.'
-        ]
-    },
-    {
-        category: '소설/창작',
-        start: '자정이 되자 저택 중앙 홀의 대형 괘종시계가 열두 번의 둔탁한 종소리를 내뿜었다.',
-        continuations: [
-            '마지막 종소리가 묵직하게 잦아들자마자, 닫혀 있던 서재의 문이 끼익 소리를 내며 저절로 열렸다.',
-            '문 너머 어둠 속에서 조용히 걸어 나온 형체는 뜻밖에도 오랫동안 행방불명되었던 그 사람이었다.',
-            '그의 손에 쥐어진 작은 금속 상자에서는 희미하게 푸른빛이 새어 나오고 있었다.'
-        ]
-    },
-    {
-        category: '소설/창작',
-        start: '바닷가 벼랑 끝에 서 있는 오래된 등대는 단 한 번도 항해사들에게 이름을 알려준 적이 없었다.',
-        continuations: [
-            '하지만 거친 풍랑 속을 항해하는 사내들에게 그 빛은 생명과도 같은 유일한 이정표였다.',
-            '등대지기 노인은 밤마다 거센 바람을 맞으며 렌즈의 먼지를 조용히 닦아내곤 했다.',
-            '그 빛줄기 하나에 수많은 사람들의 귀환과 생존이 걸려 있음을 누구보다 잘 알고 있었기 때문이다.'
-        ]
-    },
-    {
-        category: '소설/창작',
-        start: '그 사건이 일어나기 전까지 우리 동네는 지도에서도 찾아보기 힘들 만큼 조용한 시골 마을이었다.',
-        continuations: [
-            '오래된 방앗간 뒤편의 고요했던 숲속에서 정체불명의 빛과 소리가 관측되기 시작한 것은 지난주였다.',
-            '마을 사람들은 하나둘 동요하기 시작했고, 조용했던 일상에는 미세한 균열이 생기기 시작했다.',
-            '그리고 마침내 그날 밤, 숲의 가장 깊은 곳에서 첫 번째 비밀의 문이 열렸다.'
-        ]
-    },
-    {
-        category: '소설/창작',
-        start: '벽에 걸린 초상화 속 여인의 눈동자가 미세하게 움직인 것을 감지한 것은 오직 나뿐이었다.',
-        continuations: [
-            '촛불이 흐릿하게 흔들리는 가운데, 그림 속 여인은 마치 무언가를 경고하려는 듯 붉은 입술을 벙긋거렸다.',
-            '차갑고 불길한 한기가 거실 전체를 덮쳤고, 방안의 모든 시계들이 일제히 멈춰 섰다.',
-            '나는 떨리는 손으로 촛대를 쥔 채 그림 앞으로 한 걸음 천천히 다가섰다.'
-        ]
-    },
-    {
-        category: '소설/창작',
-        start: '그 지도를 손에 넣기 위해 지나온 수천 킬로미터의 거친 여정이 머릿속을 스쳐 지나갔다.',
-        continuations: [
-            '지도 표면에 새겨진 고대 문자들은 월광 아래에서 신비로운 은빛으로 밝게 출렁였다.',
-            '전설로만 전해지던 잃어버린 지하 도시의 입구가 비로소 내 발 밑에서 소리를 내며 열렸다.',
-            '긴 숨을 내쉬며 나침반을 고쳐 쥔 채, 어둠 속을 향해 첫 걸음을 내딛었다.'
-        ]
-    },
-
-    // --- 질문 / 생각 ---
-    {
-        category: '질문/생각',
-        start: '만약 과거의 나에게 딱 한 번의 편지를 보낼 수 있다면, 나는 어떤 말을 첫 문장으로 적을까?',
-        continuations: [
-            '지나온 길의 수많은 시행착오와 눈물을 미리 경고해 주고 싶을까, 아니면 다 괜찮을 거라고 안아줄까.',
-            '어쩌면 용기를 잃고 방황하던 그날의 나에게 주저하지 말고 스스로를 믿으라 적을지도 모른다.',
-            '결국 어떤 선택을 하든 그 모든 과정이 지금의 소중한 나를 만들어냈음을 비로소 깨닫는다.'
-        ]
-    },
-    {
-        category: '질문/생각',
-        start: '우리가 진정으로 두려워하는 것은 변화 그 자체가 아니라, 소중한 무언가를 잃는 것은 아닐까?',
-        continuations: [
-            '익숙함이라는 울타리 안은 안락하지만, 새로운 시작은 늘 가슴 뛰는 불확실성을 동반한다.',
-            '손에 쥔 것을 내려놓아야만 새로운 가능성을 비로소 두 손 가득 담을 수 있다는 사실을 잊곤 한다.',
-            '용기란 두려움이 없는 것이 아니라, 두려움에도 불구하고 한 걸음 내딛는 마음이다.'
-        ]
-    },
-    {
-        category: '질문/생각',
-        start: '진정한 행복이란 크고 거창한 성취보다, 아주 작고 사소한 일상의 순간들에 숨어 있는 게 아닐까?',
-        continuations: [
-            '갓 볶아낸 커피의 고소한 향기, 해 질 녘 바람에 흔들리는 나뭇잎 소리 같은 미세한 기쁨들 말이다.',
-            '목표를 향해 쉼 없이 달리느라 바로 곁에 있던 소중한 온기들을 놓치고 살았던 것은 아닌지 돌아보게 된다.',
-            '행복은 발견되는 것이 아니라, 지금 이 순간의 다정함을 깨닫는 마음의 시선에서 태어난다.'
-        ]
-    },
-    {
-        category: '질문/생각',
-        start: '타인의 시선과 기대라는 무거운 겉옷을 벗어던지고 나면, 과연 진짜 나만의 모습은 무엇일까?',
-        continuations: [
-            '세상이 요구하는 역할과 기준에 맞추느라 오랜 시간 스스로의 진짜 목소리를 잊고 살았는지도 모른다.',
-            '남들에게 증명해 보이기 위한 삶이 아닌, 나 스스로가 만족하고 솔직해질 수 있는 삶을 꿈꿔본다.',
-            '오늘 밤은 다른 누구도 아닌, 오직 나 자신만을 위한 조용한 문장을 하나 적어본다.'
-        ]
-    }
-];
-
-// 2. 🌌 500+ DYNAMIC HIGH-IMAGINATION PROMPT GENERATOR BANK
-// 항목당 500개 이상의 유니크한 조합 문장을 보장하는 거대 문장 융합 엔진
-const PROMPT_BUILDER = {
+    // ─────────────────────────────────────────────────────────────
+    // 📖 감성 / 에세이 - 1000개+ 섬세한 내면 서정 문장
+    // ─────────────────────────────────────────────────────────────
     '감성/에세이': {
-        subjects: [
-            '새벽 세 시의 서재', '노을이 기우는 버스 창가', '오래된 단골 찻집', '비 내리는 가을 길목',
-            '먼지 쌓인 옛 다이어리', '첫눈이 내려앉은 벤치', '지나간 여름의 끝자락', '조용한 밤의 테라스',
-            '서툴게 적어 내려간 쪽지', '빛바랜 사진 한 장', '차가워진 커피잔 테두리', '달빛이 기우는 방 안'
+        templates: [
+            // 템플릿 A: [장소/시간] + 에서 + [내면 행위] + [정서적 결론]
+            (a, b, c) => `${a}에서 ${b} 보면, ${c}`,
+            // 템플릿 B: [감각 대상] + 이/가 + [감각 묘사] + [내면 결론]
+            (a, b, c) => `${a}이/가 ${b} 순간, ${c}`,
+            // 템플릿 C: [계절/날씨] + [풍경] + [독백]
+            (a, b, c) => `${a} 날, ${b} 보며 ${c}`,
+            // 템플릿 D: [감정/기억] + [비유적 묘사] + [깨달음]
+            (a, b, c) => `${a}은 ${b} 닮아 있어서, ${c}`,
+            // 템플릿 E: [구체적 행위] + [서정적 연결] + [여운]
+            (a, b, c) => `${a}을 하다 문득 ${b}, ${c}`,
         ],
-        actions: [
-            '에서 나는 문득 가슴 한구석이 헛헛해지는 이유를 알 수 없었다',
-            '에 가만히 머물다 보면 잊고 지냈던 다정한 기억들이 사뿐히 얹힌다',
-            '을 가만히 응시하자 지나간 시간의 온기가 스르르 번져왔다',
-            '에 우뚝 서자 스치듯 지나간 그 사람의 나지막한 목소리가 들렸다',
-            '을 바라보며 나는 비로소 스스로에게 조용한 안부를 물어보았다',
-            '에서 풍기는 아련함은 나를 까마득한 추억의 깊은 곳으로 데려갔다'
+        A: [
+            '새벽 네 시의 텅 빈 부엌', '비 내리는 화요일 오후의 카페 창가', '낡은 목욕탕 탈의실 거울 앞',
+            '이사 가던 날 아침의 빈 방', '아무도 없는 학교 복도 끝', '할머니 댁 마루 끝 그늘',
+            '첫차가 오기 전 승강장', '문 닫힌 도서관 계단 위', '퇴직한 아버지의 오래된 서재',
+            '지하철 역 환승 통로', '눈 내리는 공원 벤치 위', '혼자 간 바다 방파제 끝',
+            '긴 비행의 창가 자리', '낯선 도시의 여관 방', '혼자 찾은 전시관의 마지막 작품 앞',
+            '편의점 앞 노란 불빛 아래', '야근 끝 빈 사무실 창가', '이른 봄 산책로의 벚꽃 나무 아래',
+            '분식집 오래된 플라스틱 의자', '라디오가 켜진 심야 주방', '겨울 새벽 목욕탕 입구',
+            '이삿짐 박스가 가득 찬 방 구석', '가을 공원 낙엽 쌓인 오솔길', '기차 종착역 플랫폼',
+            '해 질 녘의 오래된 동네 골목', '비 오는 날 처마 밑', '반지하 방 창문 너머 발목 높이 거리',
+            '오래된 다방의 빨간 소파 위', '아무것도 약속하지 않은 일요일 오전', '물이 식어가는 욕조 안',
         ],
-        c1: [
-            '마치 잊고 지냈던 누군가의 긴 편지가 가슴으로 툭 떨어지는 기분이었다.',
-            '낮 동안 뾰족하게 날 서 있던 마음의 앙금도 그 따스한 고요 속으로 천천히 녹아내렸다.',
-            '우리는 저마다 말하지 못한 다정함들을 가슴 깊은 곳에 묻어둔 채 살아가는지도 모른다.'
+        B: [
+            '가만히 앉아', '홀로 차를 마시다', '창밖을 바라보다', '멍하니 서 있다',
+            '오래된 일기를 펼쳐', '낡은 사진을 들여다', '음악을 켜지 않고 있다', '생각 없이 걷다',
+            '잠시 숨을 고르다', '별 것 아닌 것들을 정리하다', '혼잣말을 하다', '아무것도 하지 않고',
+            '무심코 메모를 들여다', '커피를 두 손으로 감싸 쥐고', '비어있는 컵을 바라', '창에 입김을 불어넣다',
+            '오래된 노래 한 곡을 틀어', '이름 모를 사람의 뒷모습을 보다', '고개를 창쪽으로 돌리다',
+            '아무 생각 없이 천장을 올려다', '손톱만 한 창문 너머 하늘을 보다', '습관처럼 핸드폰을 내려놓다',
+            '조용히 눈을 감고 숨을 들이마시다', '무릎 위에 손을 얹어', '연필을 굴리며 멍하니',
+            '발끝으로 바닥을 두드리다', '빛이 무너지는 방향을 좇다', '먼지 쌓인 선반을 손가락으로 닦으며',
+            '흘러가는 구름을 눈으로 따라가다', '아무에게도 보내지 않은 문자를 쓰다',
         ],
-        c2: [
-            '굳이 세상의 빠른 속도에 맞추려 애쓰지 않아도 괜찮다고 조용히 위로를 건네본다.',
-            '어쩌면 글을 쓴다는 것은 그 말 못한 그리움들을 하나씩 꺼내어 불 밝혀주는 작업일 것이다.',
-            '비워진 자리에는 언젠가 더 견고하고 따스한 새로운 계절이 채워질 것임을 안다.'
+        C: [
+            '세상이 잠시 나를 잊어준 것처럼 조용하다.',
+            '그때 하지 못했던 말이 아직도 어딘가에 떠돌고 있는 것 같다.',
+            '나는 여전히 그 시절의 나를 완전히 떠나보내지 못했음을 깨닫는다.',
+            '오래도록 쌓였던 것들이 조용히 제 무게로 가라앉기 시작한다.',
+            '생각보다 많은 것을 혼자 감내하며 살아왔다는 걸 새삼 느낀다.',
+            '누군가를 기다리는 것도, 떠나보내는 것도 모두 사랑의 다른 이름임을 안다.',
+            '좋았던 것들은 왜 항상 뒤돌아서야만 비로소 선명해지는 걸까.',
+            '지금 이 순간을 잘 기억해두어야겠다 싶으면서도 이미 조금씩 흐릿해진다.',
+            '마음의 어느 한 귀퉁이가 오늘따라 유독 쓸쓸하게 환하다.',
+            '잘 지내고 있다는 말이 스스로에게도 가끔은 거짓말이 된다.',
+            '이상하게 오늘은 아무것도 설명하고 싶지 않다.',
+            '우리가 서로에게 다정했던 시절이 실은 얼마나 짧았는지 모른다.',
+            '아무것도 아닌 것들이 쌓여 결국 삶이 된다는 것이 신기하다.',
+            '이 조용한 시간이 오래 머물러 주기를 바라면서도 두렵기도 하다.',
+            '어떤 그리움은 대상이 없어도 찾아온다.',
+            '소란스럽게 살아왔는데 정작 마음의 속도는 언제나 이렇게 느렸다.',
+            '지금 이 순간에도 어딘가에서 누군가는 똑같은 외로움을 앓고 있을 것이다.',
+            '슬픔이란 잘못이 아니라 여전히 살아있다는 증거다.',
+            '다 괜찮다고 말하는 사람이 실은 가장 안 괜찮은 경우가 많다.',
+            '살면서 아무도 나를 완전히 알아주지 않아도 괜찮다는 걸 받아들이는 중이다.',
+            '가장 진솔한 이야기는 결국 혼자인 시간에만 쓸 수 있다.',
+            '행복했던 순간도 지나고 나면 어째서 이렇게 아프게 느껴지는 걸까.',
+            '오늘 하루 수고한 나에게 가장 필요한 건 판단이 아닌 따뜻함이다.',
+            '그사람이 떠난 자리에는 계속 그사람의 온도가 남아 있다.',
+            '쓰지 않은 문장들이 마음속에서 가장 오래 산다.',
+            '기억한다는 건 어쩌면 사랑하기를 포기하지 않는다는 뜻이다.',
+            '차가운 날씨가 오히려 마음속 온기를 또렷하게 느끼게 해준다.',
+            '아무것도 해결되지 않아도 이 자리에 있다는 것만으로 충분하다.',
+            '언젠가 이 모든 게 그리워질 거라는 것을 알면서도 쉬이 놓아지지 않는다.',
+            '나를 향한 가장 오래된 물음은 결국 오늘 밤도 답을 내놓지 않는다.',
         ],
-        c3: [
-            '이 조용한 서정의 시간이야말로 나를 온전히 회복시키는 유일한 쉼터다.',
-            '오늘 밤은 다른 누구도 아닌 오직 나 자신만을 위한 다정한 문장을 적어본다.',
-            '그때는 미처 알지 못했던 서툼마저도 지금 보니 참 따스한 빛깔로 기억된다.'
-        ]
     },
 
+    // ─────────────────────────────────────────────────────────────
+    // 🌿 일상 / 추억 - 1000개+ 구체적 감각의 일상 문장
+    // ─────────────────────────────────────────────────────────────
     '일상/추억': {
-        subjects: [
-            '어릴 적 동네 골목길의 빗소리', '어머니의 뚝배기 된장찌개 냄새', '학창 시절 친구와 걷던 등윗길',
-            '주말 아침 창문 틈 햇살', '퇴근길 버스 창밖의 도시 불빛', '낡은 서점의 종이 향기',
-            '여름 바닷가 자갈밭 파도 소리', '손때 묻은 옛 만화책 냄새', '학교 앞 구멍가게의 추억',
-            '해 질 녘 분식집의 김 피어오르던 풍경', '비 오는 날의 빨간 장화', '할머니의 포근한 이불 속 온기'
+        templates: [
+            (a, b, c) => `${a}의 ${b} 생각만으로도 ${c}`,
+            (a, b, c) => `${a}을 다시 마주하는 순간, ${b} 느끼며 ${c}`,
+            (a, b, c) => `${a}이 있는 풍경 속에서 ${b} 나는 ${c}`,
+            (a, b, c) => `${a}처럼 사소한 것이 ${b} 오늘따라 ${c}`,
+            (a, b, c) => `${a}을 기억하면 어김없이 ${b} 그리고 ${c}`,
         ],
-        actions: [
-            '는 생각만으로도 고단했던 하루의 피로를 사르르 녹여준다',
-            '를 다시 마주하자 수년의 시간이 순식간에 사르르 되돌려졌다',
-            '에 담긴 풋풋함은 지금의 나에게 뜻밖의 커다란 위로를 건네준다',
-            '의 향수를 떠올리자 입가에 조용하고 다정한 미소가 번져갔다',
-            '를 곰곰이 되짚어보니 세월이 흘러도 변치 않는 가치가 무엇인지 깨달았다',
-            '는 내 삶의 가슴 깊은 곳에 묵직한 이정표로 여전히 피어있다'
+        A: [
+            '어머니가 끓여주던 미역국', '형광등이 깜박이던 공부방', '교복 주머니 속 꾸깃꾸깃 500원',
+            '졸업식 날 운동장의 흙 냄새', '방학 때마다 찾던 외갓집 縁마루', '녹슨 철봉이 있던 동네 공터',
+            '새벽에 아버지가 마시던 숭늉 소리', '비 오는 날 창가에서 먹던 라면', '오래된 반 친구의 낙서 가득한 교과서',
+            '첫 월급날 슈퍼에서 산 케이크', '할머니 손에서 나던 따뜻한 콩 냄새', '소풍 날 아침 도시락 싸던 소리',
+            '중학교 복도 끝 낡은 수돗가', '여름방학 TV 앞 선풍기 바람', '처음 탄 비행기 창밖 구름',
+            '첫 자취방의 좁고 기울어진 책상', '문구점 앞 뽑기 기계', '친구들과 꾸벅꾸벅 졸다 나온 영화관',
+            '야자 시간에 몰래 먹던 빵', '새 학기 첫날 새 교과서 냄새', '입학 선물로 받은 만년필',
+            '삼촌이 타주던 오래된 오토바이', '겨울방학 찾아간 스케이트장', '부모님이 싸우던 날 담요 속에 숨어듣던 라디오',
+            '첫사랑이 주던 편의점 삼각김밥', '졸업 앨범 속 어색하게 웃는 나', '중학교 때 반장 선거에서 진 날',
+            '엄마 지갑에서 몰래 꺼낸 천 원', '여름밤 마당에서 잡던 반딧불이', '친구집 냉장고 속 시원한 수박',
+            '할아버지와 걷던 겨울 논두렁길',
         ],
-        c1: [
-            '알람 소리에 떠밀리듯 시작하는 평일과 달리 온전히 내 의지로 맞이하는 여유다.',
-            '각자의 삶을 살아가느라 바빴지만 주고받는 몇 마디에 수년의 공백은 사르르 녹았다.',
-            '손때 묻은 물건처럼 그 시절의 해맑았던 웃음소리가 바로 귓가에 맴도는 듯했다.'
+        B: [
+            '왜 이리 코끝이 시큰해지는지 모르겠다', '가슴 어딘가가 조용히 따뜻해지는 것을', '그때 그 냄새가 코끝에 스치는 것을',
+            '얼굴도 기억 안 나는 사람들이 선명하게 떠오르는 것을', '그 시절의 내가 얼마나 작고 귀여웠는지',
+            '지금 이 순간이 언젠가의 추억이 될 것임을', '그때는 몰랐던 소중함을 이제야 알게 됨을',
+            '시간이 이렇게나 빨리 흐른다는 것을', '아직 그때 감각을 몸이 기억하고 있다는 것을',
+            '삶은 결국 이런 작은 것들로 만들어진다는 것을', '그리워한다는 것이 아프기도 하고 기쁘기도 하다는 것을',
+            '우리가 공유했던 시간의 무게를', '그것이 얼마나 평범하고 동시에 소중했는지를',
+            '매일 같은 일상이 사실 얼마나 행운이었는지를', '이 기억이 내 안에서 사라지지 않기를 바란다는 것을',
+            '함께 있던 사람들이 지금 어디에 있을지를', '아무렇지도 않은 척 살아왔지만 사실 많이 그리웠음을',
+            '그 계절의 온도가 아직도 몸에 남아있음을', '다시는 돌아갈 수 없기에 더 소중하다는 것을',
+            '기억이란 가장 가깝고도 먼 여행임을',
         ],
-        c2: [
-            '돌아갈 수 없기에 더욱 아련하고 아름다운 그날의 한 조각이 마음을 뭉클하게 한다.',
-            '음식 하나, 기억 하나에 담긴 사랑의 깊이는 세월이 흘러도 절대로 가라앉지 않는다.',
-            '이 작은 여유 하나만으로도 다가올 한 주를 견뎌낼 에너지가 충전되는 듯하다.'
+        C: [
+            '마음의 오래된 서랍이 스르르 열린다.',
+            '그 시절이 그리 먼 것도 아닌 것 같다.',
+            '잠시 모든 걸 내려놓고 그때로 돌아가고 싶어진다.',
+            '살아있다는 것이 새삼 다정하게 느껴진다.',
+            '나는 어쩌다 이렇게 멀리 왔나 싶다.',
+            '그게 일상이었다는 사실이 이제는 기적처럼 느껴진다.',
+            '인생에서 가장 빛났던 시간이 어디였는지 알 것 같다.',
+            '지금 이 순간도 언젠가는 그리운 추억이 될 것이다.',
+            '오늘 하루가 참 수고로웠다는 말을 그때의 나에게 전해주고 싶다.',
+            '그날의 공기와 냄새가 지금도 온몸에 선명하다.',
+            '사람은 결국 기억의 무게로 살아가는 존재인 것 같다.',
+            '그 시절 우리가 얼마나 빛나고 있었는지 그때는 몰랐다.',
+            '아무 의미 없어 보였던 날들이 지금은 가장 아름답다.',
+            '잃어버린 것들 중에 가장 아름다운 것이 바로 그 시절이다.',
+            '지금도 그 골목 어딘가에서 우리가 웃고 있을 것만 같다.',
+            '세상이 빠르게 변해도 기억 속의 그 장면은 변하지 않는다.',
+            '사소하기에 끝없이 그립고, 그립기에 더 사소해진다.',
+            '그때의 나는 지금의 내가 얼마나 부러웠을까.',
+            '시간이 준 선물 중 기억만큼 따뜻한 것은 없다.',
+            '돌아갈 수 없어 비로소 영원이 된 하루가 있다.',
         ],
-        c3: [
-            '함께 늙어갈 수 있는 누군가가 곁에 존재한다는 것만으로도 인생은 참 다정하다.',
-            '지친 하루의 끝에서 나를 반겨줄 따뜻한 온기가 있는 곳으로 걸음을 옮긴다.',
-            '가끔은 돌아갈 수 없는 그 시절의 한 조각이 문득 그리워지는 날이 있다.'
-        ]
     },
 
+    // ─────────────────────────────────────────────────────────────
+    // 🌌 소설 / 창작 - 1000개+ 완전 상상력 폭발 문장
+    // ─────────────────────────────────────────────────────────────
     '소설/창작': {
-        subjects: [
-            '자정에 12번 울린 괘종시계 소리', '마지막 열차가 떠난 한적한 승강장', '벼랑 끝 이름 없는 등대의 빛',
-            '숲속 깊은 곳에서 열린 비밀의 문', '벽 초상화 속 여인의 눈동자 움직임', '월광 아래 은빛으로 밝혀진 고대 지도',
-            '깃털 모자의 사내가 남긴 검은 노트', '시계 침이 역방향으로 돌아가기 시작한 순간',
-            '안개 낀 포구에서 나타난 유령선', '버려진 저택 지하의 금빛 상자', '구름 위 떠 있는 비밀의 섬',
-            '얼어붙은 호수 밑바닥의 붉은 불빛'
+        templates: [
+            // 이세계/신비 템플릿
+            (a, b, c) => `${a} 그 순간, ${b} 그리고 ${c}`,
+            // 인물 중심 플롯 템플릿
+            (a, b, c) => `${a}을 손에 넣은 ${b} 비로소 깨달았다— ${c}`,
+            // 불길한 예감 템플릿
+            (a, b, c) => `${a}가 시작되던 날 밤, ${b} 것을 눈치챈 것은 ${c}`,
+            // 모험/탐험 템플릿
+            (a, b, c) => `${a}의 지도를 따라간 끝에, ${b} 그곳에서 ${c}`,
+            // 반전/충격 템플릿
+            (a, b, c) => `모두가 ${a}라 믿었지만, ${b} 진실은 ${c}`,
         ],
-        actions: [
-            '를 목격한 순간, 그는 주머니 속 열쇠를 단단히 고쳐 쥐었다',
-            '가 시작되자 저택 내의 모든 불빛들이 일제히 흐릿하게 흔들렸다',
-            '는 전설 속 이야기인 줄로만 알았던 비밀의 진실을 폭로하고 있었다',
-            '가 눈앞에 펼쳐지자 수년 간 준비해온 여정이 비로소 완성됨을 느꼈다',
-            '의 경고를 직감한 순간, 나 역시 떨리는 손으로 촛대를 바짝 잡았다',
-            '에 도달하자 돌아갈 길은 차갑게 막히고 완전히 새로운 운명이 열렸다'
+        A: [
+            '자정에 열두 번 울리는 괘종시계', '달이 사라진 이틀 연속의 밤', '거울 속 또 다른 세계',
+            '봉인된 석관의 황금 자물쇠', '이름이 지워진 낡은 양피지 지도', '바다 밑에 가라앉은 유리 도시',
+            '그림자가 주인보다 먼저 움직이기 시작한 것', '100년째 닫히지 않는 낡은 저택의 문',
+            '모든 새가 한 방향으로만 날기 시작한 것', '소년이 주운 상자 속 낯선 언어의 편지',
+            '목격자 없이 사라진 마을 전체', '어두운 호수 밑에서 올라온 손',
+            '세 번 부르면 나타난다는 이름 없는 존재', '뒤집어진 달력이 가리키는 날짜',
+            '오직 정오에만 열리는 비밀 문', '기억을 먹는다는 소문의 나방',
+            '탑의 꼭대기에서 들리는 누군가의 노래', '불에 타지 않는 한 장의 사진',
+            '모든 시계가 같은 시각에 멈춘 것', '번개가 열두 번 같은 곳에 떨어진 밭',
+            '죽은 나무에서 피어난 하얀 꽃', '지하 깊은 곳에서 발견된 빛나는 돌',
+            '아무도 보낸 적 없는 편지가 매일 도착하는 것', '물속에서도 꺼지지 않는 촛불 하나',
+            '지워지지 않는 붉은 발자국', '잠을 자면 같은 꿈에서 만나는 낯선 여인',
+            '열 개의 계단을 내려가야 나오는 열한 번째 방', '소리가 사라진 도시',
+            '유리구슬 속에 갇힌 작은 도시', '별자리가 하룻밤 새 바뀌어버린 하늘',
         ],
-        c1: [
-            '돌아갈 길은 이제 완전히 끊겼고 앞에는 낯선 세계의 불빛들만이 차갑게 찰랑거렸다.',
-            '문 너머 어둠 속에서 조용히 걸어 나온 형체는 오랫동안 행방불명되었던 사람이었다.',
-            '그의 손에 쥐어진 작은 금속 상자에서는 희미하게 푸른빛이 새어 나오고 있었다.'
+        B: [
+            '세상의 모든 문이 동시에 잠겨버렸다', '그것은 태초부터 그곳에 있었던 것이 아니었다',
+            '두 사람의 그림자가 하나로 합쳐졌다', '백 년간의 침묵이 끝났다',
+            '지도에 없던 새로운 길이 나타났다', '그는 자신이 이미 죽었음을 알아챘다',
+            '선택지는 오직 두 개였으나 둘 다 돌아올 수 없는 길이었다',
+            '그 물건을 만지는 순간 과거의 장면들이 폭포처럼 쏟아졌다',
+            '아무도 기억하지 못하는 기억이 되살아났다', '하늘의 색이 서서히 바뀌기 시작했다',
+            '그 문을 열었을 때 들려온 것은 자신의 목소리였다', '존재하지 않아야 할 것들이 눈앞에 펼쳐졌다',
+            '그 이름을 부르는 순간 세상이 단 일 초 멈췄다', '그가 떠난 뒤에도 의자에는 온기가 남았다',
+            '지하 세계로 내려가는 계단이 끝없이 이어졌다', '모든 거울이 같은 얼굴을 보여주기 시작했다',
+            '금지된 책의 마지막 페이지가 저절로 펼쳐졌다', '그가 그린 지도가 현실이 되기 시작했다',
+            '적은 뜻밖에도 오랜 친구의 얼굴을 하고 있었다', '탑 꼭대기에 도달한 것은 그 홀로가 아니었다',
+            '나침반 바늘이 북쪽이 아닌 그를 가리켰다', '모든 사람이 잠든 시각, 세상이 거꾸로 돌았다',
         ],
-        c2: [
-            '촛불이 흔들리는 가운데 그림 속 모습은 무언가를 경고하려는 듯 입술을 벙긋거렸다.',
-            '거친 풍랑 속을 항해하는 이들에게 그 빛은 생명과도 같은 유일한 이정표였다.',
-            '긴 숨을 내쉬며 나침반을 고쳐 쥔 채 어둠 속을 향해 첫 걸음을 내딛었다.'
+        C: [
+            '이 모든 것이 처음부터 계획된 일이었다.',
+            '그것이 세상의 끝이자 또 다른 시작임을 알았다.',
+            '오직 그 한 사람만이 진실을 알고 있었다.',
+            '돌아갈 방법은 이미 사라지고 없었다.',
+            '두려움보다 강한 것이 호기심이었고, 그것이 모든 것을 바꾸었다.',
+            '천 년의 봉인이 단 한 사람의 손으로 풀리는 순간이었다.',
+            '세계는 그 선택 이전과 이후로 영원히 나뉘었다.',
+            '진실을 아는 자와 모르는 자 사이의 경계가 무너졌다.',
+            '이름 없는 것들에게도 이야기가 있다는 사실을 비로소 알았다.',
+            '아무도 믿지 않을 이야기지만, 그것은 분명히 일어났다.',
+            '그 문 너머에서 기다리고 있는 것은 구원인지 파멸인지 알 수 없었다.',
+            '운명이란 거역할 수 없는 것이 아니라, 선택하는 것임을 알았다.',
+            '살아남은 자의 이야기는 이제 막 시작되고 있었다.',
+            '그날 밤 이후로 그 마을에서는 아무도 별을 올려다보지 않았다.',
+            '수백 년 전 누군가도 이 자리에서 같은 선택을 했음을 뒤늦게 깨달았다.',
+            '불가능하다 여겼던 일이 바로 눈앞에서 실재가 되었다.',
+            '그것을 믿지 않았던 자들도 이제는 침묵 속에 고개를 끄덕였다.',
+            '한 사람의 선택이 어떻게 세상의 방향을 바꾸는지 그날에야 알았다.',
+            '이야기는 끝났지만, 그 여운은 영원히 사라지지 않을 것이었다.',
+            '누군가 이 이야기를 기록해야 한다면, 바로 내가 해야 했다.',
         ],
-        c3: [
-            '이제 이 낯선 땅에서 자신만의 새로운 이야기를 다시 써 내려갈 차례였다.',
-            '빛줄기 하나에 수많은 사람들의 생존과 귀환이 걸려 있음을 누구보다 잘 알고 있었다.',
-            '그리고 마침내 그날 밤, 숲의 가장 깊은 곳에서 비밀의 문이 소리를 내며 열렸다.'
-        ]
     },
 
+    // ─────────────────────────────────────────────────────────────
+    // 💭 질문 / 생각 - 1000개+ 깊은 성찰과 철학적 물음
+    // ─────────────────────────────────────────────────────────────
     '질문/생각': {
-        subjects: [
-            '과거의 나에게 단 한 번의 편지를 보낼 수 있다면', '우리가 진정 두려워하는 것이 소중한 것을 잃는 것이라면',
-            '진정한 행복이란 성취가 아닌 사소한 일상의 기쁨이라면', '타인의 시선과 기대라는 무거운 겉옷을 벗어던진다면',
-            '실패란 완벽한 끝이 아닌 지혜로운 재시작의 기회라면', '침묵이 아무것도 말하지 않는 공백이 아니라 깊은 언어라면',
-            '용기란 두려움이 없는 게 아니라 두려움에도 내딛는 거라면', '내가 걸어온 수많은 시행착오들이 나를 만든 거라면'
+        templates: [
+            (a, b, c) => `만약 ${a} 수 있다면, 나는 ${b} 것인가— ${c}`,
+            (a, b, c) => `${a}이란 ${b} 것이 아니라, ${c}`,
+            (a, b, c) => `우리가 ${a}하는 진짜 이유는 ${b} 것이 아닐까— ${c}`,
+            (a, b, c) => `${a}을 잃지 않기 위해 ${b} 것은 아닐까— ${c}`,
+            (a, b, c) => `${a}가 없다면 나는 과연 ${b}— ${c}`,
         ],
-        actions: [
-            ', 나는 과연 어떤 문장을 첫 머리에 가장 먼저 써 내려갈까',
-            ', 과연 우리는 지금 이 순간을 어떻게 바라보아야만 할까',
-            ', 지금까지 달려왔던 무거운 속도를 조금은 줄여도 되지 않을까',
-            ', 나 스스로가 만족하고 온전히 솔직해지는 삶이란 무엇일까',
-            ', 다가올 미래에 대한 주저함도 조금은 다정하게 읽히지 않을까',
-            ', 우리는 비로소 삶이 건네는 조용한 안부를 깨닫게 되는 게 아닐까'
+        A: [
+            '시간을 되돌릴', '단 하나의 진실만을 알', '내 기억을 모두 지울',
+            '타인의 마음을 그대로 느껴볼', '아무도 모르게 다시 시작할', '삶의 속도를 마음대로 조절할',
+            '죽음이 오는 날짜를 미리 알', '내가 싫어하는 사람의 삶 하루를 살아볼',
+            '아무것도 아닌 채로 아무도 모르게 존재해볼', '세상에서 가장 사랑받는 사람이 될',
+            '거짓말을 전혀 할 수 없게 될', '기억을 고를', '상처를 느끼지 못할',
+            '타인의 꿈속을 여행할', '삶을 완전히 처음부터 다시 설계할',
         ],
-        c1: [
-            '지나온 길의 수많은 시행착오를 미리 경고해 주고 싶을까 아니면 괜찮다고 안아줄까.',
-            '손에 쥔 성취보다 더 소중한 것은 스스로에게 온전히 솔직해질 수 있는 마음이다.',
-            '익숙함이라는 울타리 안은 안락하지만 새로운 시작은 늘 가슴 뛰는 불확실성을 동반한다.'
+        B: [
+            '과연 다른 선택을 했을', '정말로 지금과 같은 사람이 되었을',
+            '무엇을 가장 먼저 바꾸고 싶었을', '진심으로 행복해질', '스스로를 더 잘 이해할',
+            '더 용감해질', '주변을 더 아낄', '덜 후회하며 살',
+            '더 많은 것을 내려놓을', '지금의 나를 더 사랑할',
+            '삶을 덜 두려워할', '타인에게 더 다정해질', '진짜 원하는 것을 알',
+            '스스로에게 더 솔직해질', '지금과 전혀 다른 사람이 되어있을',
         ],
-        c2: [
-            '남들에게 증명해 보이기 위한 삶이 아닌 나 스스로가 만족할 수 있는 삶을 꿈꿔본다.',
-            '손에 쥔 것을 내려놓아야만 새로운 가능성을 두 손 가득 담을 수 있다는 걸 깨닫는다.',
-            '넘어졌던 그 자리에서 찾아낸 작은 깨달음 하나가 다가올 길을 밝혀주는 등불이 된다.'
+        C: [
+            '답을 모르기에 오히려 오래도록 생각하게 된다.',
+            '어쩌면 질문을 던지는 것만으로도 이미 충분한 삶이다.',
+            '살면서 가장 어려운 상대는 늘 나 자신이었다.',
+            '완벽한 선택은 없지만, 선택을 하는 것이 곧 삶이다.',
+            '이 질문에 대한 답은 결국 살아가면서 스스로 찾아야 한다.',
+            '모든 사람이 저마다의 답을 갖고 태어나는 것은 아닐까.',
+            '두려워한다는 것은 아직 그것에 진심이라는 뜻이다.',
+            '알 수 없기에 인생은 여전히 흥미롭고 가치 있다.',
+            '나는 오늘도 나 자신에게 가장 솔직하지 못한 사람이다.',
+            '물음표 하나가 때로는 마침표보다 더 많은 이야기를 담는다.',
+            '삶이 답을 숨겨두는 이유는, 스스로 찾는 과정이 더 중요하기 때문일 것이다.',
+            '후회보다 질문이 더 건강하다고 믿기로 한다.',
+            '우리는 모두 자기 자신이라는 가장 어려운 문제를 풀며 산다.',
+            '어떤 진실은 알고 싶지 않지만, 그래서 더 알아야 한다.',
+            '가장 용감한 행동은 자기 자신에게 솔직한 질문을 던지는 것이다.',
+            '삶은 목적지가 아니라 이 모든 물음 위를 걷는 여정이다.',
+            '정답이 없는 질문일수록 더 오래 곁에 두고 싶어진다.',
+            '이 생각을 글로 남기지 않으면, 아마 평생 마음속에서만 맴돌 것이다.',
+            '나에게 던지는 질문의 수가 많을수록, 삶의 깊이가 달라진다.',
+            '가장 사랑하는 것을 잃을 두려움이 곧 가장 크게 사랑하고 있다는 증거다.',
         ],
-        c3: [
-            '어떤 선택을 하든 그 모든 과정이 지금의 소중한 나를 만들어냈음을 안다.',
-            '오늘 밤은 다른 누구도 아닌 오직 나 자신만을 위한 조용한 문장을 하나 적어본다.',
-            '행복은 발견되는 것이 아니라 지금 이 순간의 다정함을 깨닫는 마음의 시선에서 태어난다.'
-        ]
-    }
+    },
 };
 
-// 3. GENERATE 500+ DYNAMIC UNIQUE PROMPTS PER CATEGORY
-let GENERATED_DECK = {
-    'all': [],
-    '감성/에세이': [],
-    '일상/추억': [],
-    '소설/창작': [],
-    '질문/생각': []
-};
+// ═══════════════════════════════════════════════════════════════════════════
+// 2. BUILD AND SHUFFLE MEGA DECKS AT STARTUP (각 카테고리 1000개+ 자동 생성)
+// ═══════════════════════════════════════════════════════════════════════════
 
-function buildMegaPromptDecks() {
-    GENERATED_DECK = { 'all': [], '감성/에세이': [], '일상/추억': [], '소설/창작': [], '질문/생각': [] };
+let BUILT_DECKS = {};
+let DECK_POINTERS = {};
 
-    // 1. Add Hand-crafted Base Prompts
-    BASE_PROMPTS.forEach((p, idx) => {
-        const item = { ...p, id: 'base_' + idx };
-        GENERATED_DECK[p.category].push(item);
-        GENERATED_DECK['all'].push(item);
+function buildAllDecks() {
+    BUILT_DECKS = {};
+    DECK_POINTERS = {};
+
+    const catNames = ['감성/에세이', '일상/추억', '소설/창작', '질문/생각'];
+    catNames.forEach(cat => {
+        BUILT_DECKS[cat] = generateDeckForCategory(cat);
+        shuffleDeck(BUILT_DECKS[cat]);
+        DECK_POINTERS[cat] = 0;
     });
 
-    // 2. Build 500+ Combinatorial Unique Prompts for Each Category
-    const categories = ['감성/에세이', '일상/추억', '소설/창작', '질문/생각'];
-    let globalIdCount = 100;
-
-    categories.forEach(cat => {
-        const builder = PROMPT_BUILDER[cat];
-        if (!builder) return;
-
-        let count = 0;
-        // Permute subjects and actions
-        for (let i = 0; i < builder.subjects.length; i++) {
-            for (let j = 0; j < builder.actions.length; j++) {
-                const sub = builder.subjects[i];
-                const act = builder.actions[j];
-                const c1 = builder.c1[(i + j) % builder.c1.length];
-                const c2 = builder.c2[(i + j + 1) % builder.c2.length];
-                const c3 = builder.c3[(i + j + 2) % builder.c3.length];
-
-                const promptItem = {
-                    id: 'gen_' + (globalIdCount++),
-                    category: cat,
-                    start: `${sub}${act}.`,
-                    continuations: [c1, c2, c3]
-                };
-
-                GENERATED_DECK[cat].push(promptItem);
-                GENERATED_DECK['all'].push(promptItem);
-                count++;
-                if (count >= 350) break; // Ensure 350+ unique items per category
-            }
-            if (count >= 350) break;
-        }
+    // ALL = union of all category decks, shuffled
+    BUILT_DECKS['all'] = [];
+    catNames.forEach(cat => {
+        BUILT_DECKS[cat].forEach(item => {
+            BUILT_DECKS['all'].push({ ...item });
+        });
     });
-
-    // Fisher-Yates Shuffle each deck
-    Object.keys(GENERATED_DECK).forEach(cat => {
-        const arr = GENERATED_DECK[cat];
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-    });
+    shuffleDeck(BUILT_DECKS['all']);
+    DECK_POINTERS['all'] = 0;
 }
 
-// 4. DETERMINISTIC POP ENGINE (ZERO REPETITION GUARANTEED)
-let activePointers = {
-    'all': 0,
-    '감성/에세이': 0,
-    '일상/추억': 0,
-    '소설/창작': 0,
-    '질문/생각': 0
+function generateDeckForCategory(cat) {
+    const eng = MEGA_ENGINE[cat];
+    if (!eng) return [];
+
+    const { templates, A, B, C } = eng;
+    const deck = [];
+    let idCounter = 0;
+
+    // Permute all combinations: for each template × A × B × C
+    // We cap each combination block at 1000 to keep performance snappy
+    templates.forEach((tmpl, ti) => {
+        A.forEach((a, ai) => {
+            B.forEach((b, bi) => {
+                // Pick C based on (ai + bi + ti) to ensure variety without triple loop blowup
+                const c = C[(ai + bi + ti) % C.length];
+                const sentence = tmpl(a, b, c);
+                deck.push({
+                    id: `${cat}_${idCounter++}`,
+                    category: cat,
+                    start: sentence,
+                    continuations: getContinuations(cat, ai, bi, ti)
+                });
+            });
+        });
+    });
+
+    return deck;
+}
+
+// Continuation sentence pools per category
+const CONT = {
+    '감성/에세이': [
+        ['그날의 온기가 이렇게나 오래 남아있을 줄 몰랐다.', '아마 그때의 나도 나름의 최선을 다하고 있었을 것이다.', '이 고요함이 오래 머물러 주기를 바란다.'],
+        ['말하지 못했던 많은 것들이 지금은 그리움의 이름을 달고 있다.', '오늘 밤만큼은 아무것도 설명하지 않아도 되는 시간이다.', '슬픔이 잘못이 아니라는 걸 이제는 안다.'],
+        ['누군가는 지금 이 순간도 똑같은 감정을 느끼고 있을 것이다.', '기억은 가장 따뜻한 여행지다.', '오늘 하루도 참 수고로웠다는 말을 나 자신에게 건넨다.'],
+    ],
+    '일상/추억': [
+        ['그 시절이 그리 먼 것도 아닌 것 같다.', '기억이 이렇게 생생한 건 그만큼 소중했다는 뜻이다.', '언젠가 이날도 그렇게 그리워지겠지.'],
+        ['가장 평범했던 날들이 지금은 가장 눈부시다.', '함께였던 사람들은 지금 어디에서 무엇을 하고 있을까.', '그때로 돌아갈 수 없기에 더욱 소중하다.'],
+        ['삶은 결국 이런 사소한 것들로 이루어진다.', '추억은 나이가 들수록 더 또렷해진다.', '그 시절 우리는 빛나고 있었다.'],
+    ],
+    '소설/창작': [
+        ['이제 돌아갈 방법은 사라졌다.', '세계는 그 이전과 이후로 나뉘었다.', '살아남은 자의 이야기가 비로소 시작됐다.'],
+        ['진실을 아는 자는 단 한 명뿐이었다.', '그 선택이 결국 모든 것을 바꿔놓았다.', '아무도 믿지 않을 이야기지만, 그것은 일어났다.'],
+        ['운명은 거역하는 것이 아니라 선택하는 것임을 알았다.', '이 이야기를 기록할 수 있는 사람은 이제 나뿐이다.', '그날 이후로 세상은 다시 예전으로 돌아가지 않았다.'],
+    ],
+    '질문/생각': [
+        ['답을 모르기에 오히려 오래 생각하게 된다.', '어쩌면 질문을 던지는 것만으로 충분하다.', '살면서 가장 어려운 상대는 언제나 나 자신이었다.'],
+        ['물음표 하나가 마침표보다 더 많은 것을 담을 때가 있다.', '나는 오늘도 나에게 가장 솔직하지 못하다.', '정답이 없는 질문일수록 더 오래 품고 싶어진다.'],
+        ['가장 용감한 행동은 자신에게 솔직한 질문을 던지는 것이다.', '삶은 이 모든 물음 위를 걷는 여정이다.', '이 생각을 글로 남기지 않으면 영원히 마음속에서만 맴돌 것이다.'],
+    ],
 };
 
-function getNextImaginativePrompt(category) {
-    if (!GENERATED_DECK[category] || GENERATED_DECK[category].length === 0) {
-        buildMegaPromptDecks();
-    }
+function getContinuations(cat, ai, bi, ti) {
+    const pool = CONT[cat] || CONT['감성/에세이'];
+    const idx = (ai + bi + ti) % pool.length;
+    return pool[idx];
+}
 
-    const deck = GENERATED_DECK[category];
-    let ptr = activePointers[category] || 0;
+function shuffleDeck(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+function getNextPrompt(category) {
+    const deck = BUILT_DECKS[category];
+    if (!deck || deck.length === 0) return null;
+
+    let ptr = DECK_POINTERS[category] || 0;
 
     if (ptr >= deck.length) {
-        // Re-shuffle deck if finished
-        for (let i = deck.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [deck[i], deck[j]] = [deck[j], deck[i]];
-        }
+        // Re-shuffle and restart when all prompts have been shown
+        shuffleDeck(deck);
         ptr = 0;
     }
 
-    const selectedPrompt = deck[ptr];
-    activePointers[category] = ptr + 1;
-    return selectedPrompt;
+    const prompt = deck[ptr];
+    DECK_POINTERS[category] = ptr + 1;
+    return prompt;
 }
 
-// ==========================================================================
-// 🧠 5. SMART USER CONTENT-AWARE ADVICE ANALYZER
-// ==========================================================================
+// ═══════════════════════════════════════════════════════════════════════════
+// 3. SMART REAL-TIME ADVICE ENGINE
+// ═══════════════════════════════════════════════════════════════════════════
 
 const ADVICE_PATTERNS = [
     {
@@ -486,70 +433,32 @@ const DEFAULT_ADVICES = [
     }
 ];
 
-// APP STATE
+// ═══════════════════════════════════════════════════════════════════════════
+// 4. APP STATE & DOM INIT
+// ═══════════════════════════════════════════════════════════════════════════
+
 let currentPrompt = null;
 let currentContinuationIndex = 0;
 let currentCategory = 'all';
 let isAdvicePanelOpen = false;
 let currentViewingDoc = null;
 
-// DOM ELEMENTS
-let promptDisplayArea;
-let btnGeneratePrompt;
-let btnRefreshPrompt;
-let btnContinuePrompt;
-let continueStepBadge;
-let btnApplyToEditor;
+let promptDisplayArea, btnGeneratePrompt, btnRefreshPrompt, btnContinuePrompt,
+    continueStepBadge, btnApplyToEditor, documentTitle, editorTextarea,
+    draftStatusIndicator, statLengthWithSpaces, statLengthNoSpaces, statWords, statManuscript,
+    btnClearEditor, btnCopyEditor, btnSaveDocument, btnOpenStorage, btnNewDocument, savedCountBadge,
+    storageModal, btnCloseStorage, storageSearchInput, storageItemsList,
+    viewModal, btnCloseView, viewModalTitle, viewModalDate, viewModalStats,
+    viewModalContent, btnExportTxt, btnLoadIntoEditor,
+    btnToggleAdvice, advicePanel, btnCloseAdvice, adviceStatusTag, adviceStatusMessage,
+    adviceCardsContainer, btnRefreshAdvice, editorLayoutWrapper,
+    toastNotification, toastMessage;
 
-let documentTitle;
-let editorTextarea;
-let draftStatusIndicator;
-
-let statLengthWithSpaces;
-let statLengthNoSpaces;
-let statWords;
-let statManuscript;
-
-let btnClearEditor;
-let btnCopyEditor;
-let btnSaveDocument;
-
-let btnOpenStorage;
-let btnNewDocument;
-let savedCountBadge;
-
-let storageModal;
-let btnCloseStorage;
-let storageSearchInput;
-let storageItemsList;
-
-let viewModal;
-let btnCloseView;
-let viewModalTitle;
-let viewModalDate;
-let viewModalStats;
-let viewModalContent;
-let btnExportTxt;
-let btnLoadIntoEditor;
-
-let btnToggleAdvice;
-let advicePanel;
-let btnCloseAdvice;
-let adviceStatusTag;
-let adviceStatusMessage;
-let adviceCardsContainer;
-let btnRefreshAdvice;
-let editorLayoutWrapper;
-
-let toastNotification;
-let toastMessage;
-
-// INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
     initElements();
     initEventListeners();
     initCategoryPills();
-    buildMegaPromptDecks(); // Pre-build 350+ unique prompts per category
+    buildAllDecks();
     updateSavedCountBadge();
     loadDraftFromLocalStorage();
     updateStats();
@@ -563,29 +472,23 @@ function initElements() {
     btnContinuePrompt = document.getElementById('btn-continue-prompt');
     continueStepBadge = document.getElementById('continue-step-badge');
     btnApplyToEditor = document.getElementById('btn-apply-to-editor');
-
     documentTitle = document.getElementById('document-title');
     editorTextarea = document.getElementById('editor-textarea');
     draftStatusIndicator = document.getElementById('draft-status-indicator');
-
     statLengthWithSpaces = document.getElementById('stat-length-with-spaces');
     statLengthNoSpaces = document.getElementById('stat-length-no-spaces');
     statWords = document.getElementById('stat-words');
     statManuscript = document.getElementById('stat-manuscript');
-
     btnClearEditor = document.getElementById('btn-clear-editor');
     btnCopyEditor = document.getElementById('btn-copy-editor');
     btnSaveDocument = document.getElementById('btn-save-document');
-
     btnOpenStorage = document.getElementById('btn-open-storage');
     btnNewDocument = document.getElementById('btn-new-document');
     savedCountBadge = document.getElementById('saved-count-badge');
-
     storageModal = document.getElementById('storage-modal');
     btnCloseStorage = document.getElementById('btn-close-storage');
     storageSearchInput = document.getElementById('storage-search-input');
     storageItemsList = document.getElementById('storage-items-list');
-
     viewModal = document.getElementById('view-modal');
     btnCloseView = document.getElementById('btn-close-view');
     viewModalTitle = document.getElementById('view-modal-title');
@@ -594,7 +497,6 @@ function initElements() {
     viewModalContent = document.getElementById('view-modal-content');
     btnExportTxt = document.getElementById('btn-export-txt');
     btnLoadIntoEditor = document.getElementById('btn-load-into-editor');
-
     btnToggleAdvice = document.getElementById('btn-toggle-advice');
     advicePanel = document.getElementById('advice-panel');
     btnCloseAdvice = document.getElementById('btn-close-advice');
@@ -603,55 +505,35 @@ function initElements() {
     adviceCardsContainer = document.getElementById('advice-cards-container');
     btnRefreshAdvice = document.getElementById('btn-refresh-advice');
     editorLayoutWrapper = document.getElementById('editor-layout-wrapper');
-
     toastNotification = document.getElementById('toast-notification');
     toastMessage = document.getElementById('toast-message');
 }
 
 function initEventListeners() {
-    btnGeneratePrompt.addEventListener('click', () => generatePrompt());
-    btnRefreshPrompt.addEventListener('click', () => generatePrompt());
-    btnContinuePrompt.addEventListener('click', () => addContinuationSentence());
-    btnApplyToEditor.addEventListener('click', () => applyPromptToEditor());
-
-    if (btnToggleAdvice) btnToggleAdvice.addEventListener('click', () => toggleAdvicePanel());
-    if (btnCloseAdvice) btnCloseAdvice.addEventListener('click', () => closeAdvicePanel());
-    if (btnRefreshAdvice) btnRefreshAdvice.addEventListener('click', () => renderAdviceCards());
-
+    btnGeneratePrompt.addEventListener('click', generatePrompt);
+    btnRefreshPrompt.addEventListener('click', generatePrompt);
+    btnContinuePrompt.addEventListener('click', addContinuationSentence);
+    btnApplyToEditor.addEventListener('click', applyPromptToEditor);
+    if (btnToggleAdvice) btnToggleAdvice.addEventListener('click', toggleAdvicePanel);
+    if (btnCloseAdvice) btnCloseAdvice.addEventListener('click', closeAdvicePanel);
+    if (btnRefreshAdvice) btnRefreshAdvice.addEventListener('click', renderAdviceCards);
     editorTextarea.addEventListener('input', () => {
-        updateStats();
-        triggerAutoSaveDraft();
-        if (isAdvicePanelOpen) {
-            updateAdviceStatusMessage();
-            renderAdviceCards();
-        }
+        updateStats(); triggerAutoSaveDraft();
+        if (isAdvicePanelOpen) { updateAdviceStatusMessage(); renderAdviceCards(); }
     });
-
-    documentTitle.addEventListener('input', () => triggerAutoSaveDraft());
-
-    btnClearEditor.addEventListener('click', () => clearEditor());
-    btnCopyEditor.addEventListener('click', () => copyEditorContent());
-    btnSaveDocument.addEventListener('click', () => saveDocument());
-
-    btnOpenStorage.addEventListener('click', () => openStorageModal());
-    btnNewDocument.addEventListener('click', () => createNewDocument());
-
-    btnCloseStorage.addEventListener('click', () => closeStorageModal());
-    storageModal.addEventListener('click', (e) => {
-        if (e.target === storageModal) closeStorageModal();
-    });
-
-    btnCloseView.addEventListener('click', () => closeViewModal());
-    viewModal.addEventListener('click', (e) => {
-        if (e.target === viewModal) closeViewModal();
-    });
-
-    storageSearchInput.addEventListener('input', (e) => {
-        renderStorageItems(e.target.value.trim());
-    });
-
-    btnExportTxt.addEventListener('click', () => exportCurrentViewingAsTxt());
-    btnLoadIntoEditor.addEventListener('click', () => loadCurrentViewingIntoEditor());
+    documentTitle.addEventListener('input', triggerAutoSaveDraft);
+    btnClearEditor.addEventListener('click', clearEditor);
+    btnCopyEditor.addEventListener('click', copyEditorContent);
+    btnSaveDocument.addEventListener('click', saveDocument);
+    btnOpenStorage.addEventListener('click', openStorageModal);
+    btnNewDocument.addEventListener('click', createNewDocument);
+    btnCloseStorage.addEventListener('click', closeStorageModal);
+    storageModal.addEventListener('click', e => { if (e.target === storageModal) closeStorageModal(); });
+    btnCloseView.addEventListener('click', closeViewModal);
+    viewModal.addEventListener('click', e => { if (e.target === viewModal) closeViewModal(); });
+    storageSearchInput.addEventListener('input', e => renderStorageItems(e.target.value.trim()));
+    btnExportTxt.addEventListener('click', exportCurrentViewingAsTxt);
+    btnLoadIntoEditor.addEventListener('click', loadCurrentViewingIntoEditor);
 }
 
 function initCategoryPills() {
@@ -661,12 +543,7 @@ function initCategoryPills() {
             pills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
             currentCategory = pill.getAttribute('data-category');
-
-            if (currentCategory === 'all') {
-                renderInitialPromptGuide();
-            } else {
-                generatePrompt();
-            }
+            if (currentCategory === 'all') { renderInitialPromptGuide(); } else { generatePrompt(); }
         });
     });
 }
@@ -675,20 +552,16 @@ function renderInitialPromptGuide() {
     currentPrompt = null;
     currentContinuationIndex = 0;
     continueStepBadge.style.display = 'none';
-
     promptDisplayArea.innerHTML = `
         <p class="prompt-placeholder">
             아래 <strong>[첫 문장 뽑기]</strong> 버튼을 눌러 글의 첫 문장을 찾아보세요.<br>
             글쓰기가 어려울 땐 <strong>[+] 버튼</strong>으로 자연스럽게 이어지는 다음 문장도 추가할 수 있어요.
-        </p>
-    `;
+        </p>`;
 }
 
-// 🎯 GENERATE 100% ZERO-REPETITION PROMPTS (350+ GUARANTEED PER CATEGORY)
 function generatePrompt() {
-    const prompt = getNextImaginativePrompt(currentCategory);
+    const prompt = getNextPrompt(currentCategory);
     if (!prompt) return;
-
     currentPrompt = prompt;
     currentContinuationIndex = 0;
     renderPromptDisplay();
@@ -696,34 +569,19 @@ function generatePrompt() {
 
 function renderPromptDisplay() {
     if (!currentPrompt) return;
-
-    let html = `
-        <div class="prompt-category-tag">${currentPrompt.category}</div>
-        <div class="prompt-text-main">"${escapeHtml(currentPrompt.start)}"</div>
-    `;
-
+    let html = `<div class="prompt-category-tag">${currentPrompt.category}</div>
+                <div class="prompt-text-main">"${escapeHtml(currentPrompt.start)}"</div>`;
     for (let i = 0; i < currentContinuationIndex; i++) {
-        if (currentPrompt.continuations[i]) {
+        if (currentPrompt.continuations[i])
             html += `<div class="prompt-text-continuation">+ ${escapeHtml(currentPrompt.continuations[i])}</div>`;
-        }
     }
-
     promptDisplayArea.innerHTML = html;
-
-    if (currentContinuationIndex > 0) {
-        continueStepBadge.style.display = 'inline-block';
-        continueStepBadge.textContent = `+${currentContinuationIndex}`;
-    } else {
-        continueStepBadge.style.display = 'none';
-    }
+    continueStepBadge.style.display = currentContinuationIndex > 0 ? 'inline-block' : 'none';
+    if (currentContinuationIndex > 0) continueStepBadge.textContent = `+${currentContinuationIndex}`;
 }
 
 function addContinuationSentence() {
-    if (!currentPrompt) {
-        generatePrompt();
-        return;
-    }
-
+    if (!currentPrompt) { generatePrompt(); return; }
     if (currentContinuationIndex < currentPrompt.continuations.length) {
         currentContinuationIndex++;
         renderPromptDisplay();
@@ -734,49 +592,24 @@ function addContinuationSentence() {
 }
 
 function applyPromptToEditor() {
-    if (!currentPrompt) {
-        showToast('먼저 [첫 문장 뽑기] 버튼을 눌러 문장을 추천받으세요!');
-        return;
-    }
-
-    let textToApply = currentPrompt.start;
-    for (let i = 0; i < currentContinuationIndex; i++) {
-        if (currentPrompt.continuations[i]) {
-            textToApply += ' ' + currentPrompt.continuations[i];
-        }
-    }
-
-    const currentEditorText = editorTextarea.value;
-    if (currentEditorText.trim().length > 0) {
-        editorTextarea.value = currentEditorText.trim() + '\n\n' + textToApply + ' ';
-    } else {
-        editorTextarea.value = textToApply + ' ';
-    }
-
-    editorTextarea.focus();
-    updateStats();
-    triggerAutoSaveDraft();
+    if (!currentPrompt) { showToast('먼저 [첫 문장 뽑기] 버튼을 눌러 문장을 추천받으세요!'); return; }
+    let text = currentPrompt.start;
+    for (let i = 0; i < currentContinuationIndex; i++)
+        if (currentPrompt.continuations[i]) text += ' ' + currentPrompt.continuations[i];
+    const cur = editorTextarea.value;
+    editorTextarea.value = cur.trim().length > 0 ? cur.trim() + '\n\n' + text + ' ' : text + ' ';
+    editorTextarea.focus(); updateStats(); triggerAutoSaveDraft();
     showToast('추천 문장이 에디터에 적용되었습니다!');
 }
 
-// ADVICE PANEL & REAL-TIME USER CONTENT-AWARE ADVICE RENDERER
-function toggleAdvicePanel() {
-    if (isAdvicePanelOpen) {
-        closeAdvicePanel();
-    } else {
-        openAdvicePanel();
-    }
-}
-
+function toggleAdvicePanel() { isAdvicePanelOpen ? closeAdvicePanel() : openAdvicePanel(); }
 function openAdvicePanel() {
     isAdvicePanelOpen = true;
     editorLayoutWrapper.classList.add('has-advice');
     btnToggleAdvice.classList.add('active');
-    updateAdviceStatusMessage();
-    renderAdviceCards();
+    updateAdviceStatusMessage(); renderAdviceCards();
     showToast('글쓰기 방향 조언 패널이 열렸습니다.');
 }
-
 function closeAdvicePanel() {
     isAdvicePanelOpen = false;
     editorLayoutWrapper.classList.remove('has-advice');
@@ -784,258 +617,140 @@ function closeAdvicePanel() {
 }
 
 function updateAdviceStatusMessage() {
-    const textLen = editorTextarea.value.length;
-    if (textLen === 0) {
-        adviceStatusTag.textContent = '시작 단계';
-        adviceStatusMessage.textContent = '아직 글을 작성하기 전입니다! 추천 문장을 적용하거나 첫 생각을 적어보세요.';
-    } else if (textLen < 120) {
-        adviceStatusTag.textContent = '도입 단계';
-        adviceStatusMessage.textContent = '글의 첫 물꼬를 트셨군요! 장면의 풍경이나 그때의 내면 감정을 구체적으로 이어가 보세요.';
-    } else if (textLen < 350) {
-        adviceStatusTag.textContent = '전개 단계';
-        adviceStatusMessage.textContent = '이야기가 차곡차곡 쌓이고 있습니다! 인물이나 주변 소리, 냄새 같은 오감의 결을 하나 더 추가해 보세요.';
-    } else {
-        adviceStatusTag.textContent = '심화 & 마무리 단계';
-        adviceStatusMessage.textContent = '상당한 분량의 글이 완성되어 가네요! 이 생각이 전해주는 조용한 깨달음이나 내 자신에게 하고 싶은 말로 정돈해 보세요.';
-    }
+    const len = editorTextarea.value.length;
+    if (len === 0) { adviceStatusTag.textContent = '시작 단계'; adviceStatusMessage.textContent = '아직 글을 작성하기 전입니다! 추천 문장을 적용하거나 첫 생각을 적어보세요.'; }
+    else if (len < 120) { adviceStatusTag.textContent = '도입 단계'; adviceStatusMessage.textContent = '글의 첫 물꼬를 트셨군요! 장면의 풍경이나 그때의 내면 감정을 구체적으로 이어가 보세요.'; }
+    else if (len < 350) { adviceStatusTag.textContent = '전개 단계'; adviceStatusMessage.textContent = '이야기가 차곡차곡 쌓이고 있습니다! 인물이나 주변 소리, 냄새 같은 오감의 결을 하나 더 추가해 보세요.'; }
+    else { adviceStatusTag.textContent = '심화 & 마무리 단계'; adviceStatusMessage.textContent = '상당한 분량의 글이 완성되어 가네요! 이 생각이 전해주는 조용한 깨달음이나 내 자신에게 하고 싶은 말로 정돈해 보세요.'; }
 }
 
 function renderAdviceCards() {
     adviceCardsContainer.innerHTML = '';
     const userText = editorTextarea.value.trim();
-
     let matchedCards = [];
-
     if (userText.length > 0) {
         const sentences = userText.split(/(?<=[.!?\n])\s+/).filter(s => s.trim().length > 3);
-        
         ADVICE_PATTERNS.forEach(pattern => {
-            const hasKeyword = pattern.keywords.some(kw => userText.includes(kw));
-            if (hasKeyword) {
+            if (pattern.keywords.some(kw => userText.includes(kw))) {
                 let snippet = sentences.find(s => pattern.keywords.some(kw => s.includes(kw))) || sentences[sentences.length - 1] || userText.substring(0, 30);
                 if (snippet.length > 35) snippet = snippet.substring(0, 32) + '...';
-                
                 const adv = pattern.getAdvice(snippet);
-                matchedCards.push({
-                    category: pattern.category,
-                    question: adv.question,
-                    hint: adv.hint
-                });
+                matchedCards.push({ category: pattern.category, question: adv.question, hint: adv.hint });
             }
         });
     }
-
     if (matchedCards.length < 3) {
-        const remainingNeeded = 3 - matchedCards.length;
-        const shuffledDefault = [...DEFAULT_ADVICES].sort(() => 0.5 - Math.random());
-        const fill = shuffledDefault.slice(0, remainingNeeded);
+        const fill = [...DEFAULT_ADVICES].sort(() => 0.5 - Math.random()).slice(0, 3 - matchedCards.length);
         matchedCards = matchedCards.concat(fill);
     }
-
     matchedCards.slice(0, 3).forEach(adv => {
         const card = document.createElement('div');
         card.className = 'advice-card';
         card.innerHTML = `
             <div class="advice-card-header">
                 <span class="advice-card-category">${escapeHtml(adv.category)}</span>
-                <button type="button" class="btn-insert-advice" title="질문을 에디터에 가이드 문장으로 삽입">
-                    <i data-lucide="plus" style="width: 12px; height: 12px;"></i> 삽입
+                <button type="button" class="btn-insert-advice" title="에디터에 삽입">
+                    <i data-lucide="plus" style="width:12px;height:12px;"></i> 삽입
                 </button>
             </div>
             <div class="advice-card-question">${escapeHtml(adv.question)}</div>
-            <div class="advice-card-hint">${escapeHtml(adv.hint)}</div>
-        `;
-
-        const insertBtn = card.querySelector('.btn-insert-advice');
-        insertBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            insertAdviceQuestionToEditor(adv.question);
+            <div class="advice-card-hint">${escapeHtml(adv.hint)}</div>`;
+        card.querySelector('.btn-insert-advice').addEventListener('click', e => {
+            e.stopPropagation(); insertAdviceQuestionToEditor(adv.question);
         });
-
         adviceCardsContainer.appendChild(card);
     });
-
     if (window.lucide) lucide.createIcons();
 }
 
-function insertAdviceQuestionToEditor(questionText) {
-    const textToInsert = `\n\n[글쓰기 질문 💡: ${questionText}]\n`;
-    const curVal = editorTextarea.value;
-    if (curVal.trim().length > 0) {
-        editorTextarea.value = curVal.trim() + textToInsert;
-    } else {
-        editorTextarea.value = textToInsert;
-    }
-    editorTextarea.focus();
-    updateStats();
-    triggerAutoSaveDraft();
+function insertAdviceQuestionToEditor(q) {
+    const ins = `\n\n[글쓰기 질문 💡: ${q}]\n`;
+    editorTextarea.value = editorTextarea.value.trim().length > 0 ? editorTextarea.value.trim() + ins : ins;
+    editorTextarea.focus(); updateStats(); triggerAutoSaveDraft();
     showToast('방향 조언 질문이 에디터에 삽입되었습니다.');
 }
 
-// STATS & DRAFT MANAGEMENT
 function updateStats() {
-    const text = editorTextarea.value;
-    const lengthWithSpaces = text.length;
-    const lengthNoSpaces = text.replace(/\s/g, '').length;
-    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-    const manuscript = (lengthWithSpaces / 200).toFixed(1);
-
-    statLengthWithSpaces.textContent = `${lengthWithSpaces.toLocaleString()}자`;
-    statLengthNoSpaces.textContent = `${lengthNoSpaces.toLocaleString()}자`;
-    statWords.textContent = `${words.toLocaleString()}개`;
-    statManuscript.textContent = `${manuscript}장`;
+    const t = editorTextarea.value;
+    statLengthWithSpaces.textContent = `${t.length.toLocaleString()}자`;
+    statLengthNoSpaces.textContent = `${t.replace(/\s/g, '').length.toLocaleString()}자`;
+    statWords.textContent = `${(t.trim() ? t.trim().split(/\s+/).length : 0).toLocaleString()}개`;
+    statManuscript.textContent = `${(t.length / 200).toFixed(1)}장`;
 }
 
 let autoSaveTimer = null;
 function triggerAutoSaveDraft() {
     draftStatusIndicator.classList.add('active');
-    
     if (autoSaveTimer) clearTimeout(autoSaveTimer);
     autoSaveTimer = setTimeout(() => {
-        const draftData = {
-            title: documentTitle.value,
-            content: editorTextarea.value,
-            updatedAt: new Date().toISOString()
-        };
-        localStorage.setItem('geulmajoong_draft', JSON.stringify(draftData));
+        localStorage.setItem('geulmajoong_draft', JSON.stringify({ title: documentTitle.value, content: editorTextarea.value, updatedAt: new Date().toISOString() }));
     }, 500);
 }
 
 function loadDraftFromLocalStorage() {
-    const savedDraft = localStorage.getItem('geulmajoong_draft');
-    if (savedDraft) {
-        try {
-            const data = JSON.parse(savedDraft);
-            if (data.title) documentTitle.value = data.title;
-            if (data.content) editorTextarea.value = data.content;
-            if (data.title || data.content) {
-                draftStatusIndicator.classList.add('active');
-            }
-        } catch (e) {
-            console.error('Failed to load draft:', e);
-        }
-    }
+    const s = localStorage.getItem('geulmajoong_draft');
+    if (!s) return;
+    try {
+        const d = JSON.parse(s);
+        if (d.title) documentTitle.value = d.title;
+        if (d.content) editorTextarea.value = d.content;
+        if (d.title || d.content) draftStatusIndicator.classList.add('active');
+    } catch (e) { console.error(e); }
 }
 
 function clearEditor() {
     if (!editorTextarea.value && !documentTitle.value) return;
-
     if (confirm('작성 중인 내용을 모두 지우시겠습니까?')) {
-        documentTitle.value = '';
-        editorTextarea.value = '';
-        updateStats();
-        localStorage.removeItem('geulmajoong_draft');
-        draftStatusIndicator.classList.remove('active');
+        documentTitle.value = ''; editorTextarea.value = ''; updateStats();
+        localStorage.removeItem('geulmajoong_draft'); draftStatusIndicator.classList.remove('active');
         showToast('에디터가 초기화되었습니다.');
     }
 }
 
 function copyEditorContent() {
-    const title = documentTitle.value.trim();
-    const content = editorTextarea.value;
-
-    if (!content.trim()) {
-        showToast('복사할 내용이 없습니다.');
-        return;
-    }
-
-    const textToCopy = title ? `${title}\n\n${content}` : content;
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast('글 전체 내용이 클립보드에 복사되었습니다!');
-    }).catch(err => {
-        showToast('복사에 실패했습니다.');
-    });
+    if (!editorTextarea.value.trim()) { showToast('복사할 내용이 없습니다.'); return; }
+    const t = documentTitle.value.trim();
+    navigator.clipboard.writeText(t ? `${t}\n\n${editorTextarea.value}` : editorTextarea.value)
+        .then(() => showToast('글 전체 내용이 클립보드에 복사되었습니다!'))
+        .catch(() => showToast('복사에 실패했습니다.'));
 }
 
 function saveDocument() {
     const title = documentTitle.value.trim() || '제목 없는 글';
     const content = editorTextarea.value;
-
-    if (!content.trim()) {
-        showToast('저장할 내용을 에디터에 작성해 주세요!');
-        editorTextarea.focus();
-        return;
-    }
-
+    if (!content.trim()) { showToast('저장할 내용을 에디터에 작성해 주세요!'); editorTextarea.focus(); return; }
     const now = new Date();
-    const dateStr = `${now.getFullYear()}. ${(now.getMonth()+1).toString().padStart(2, '0')}. ${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-
-    const newDoc = {
-        id: Date.now().toString(),
-        title: title,
-        content: content,
-        date: dateStr,
-        createdAt: now.toISOString(),
-        charCount: content.length,
-        manuscriptCount: (content.length / 200).toFixed(1)
-    };
-
-    const saved = getSavedDocuments();
-    saved.unshift(newDoc);
-    localStorage.setItem('geulmajoong_documents', JSON.stringify(saved));
-
-    updateSavedCountBadge();
-    showToast(`"${title}" 글이 내 보관함에 저장되었습니다!`);
+    const dateStr = `${now.getFullYear()}. ${(now.getMonth()+1).toString().padStart(2,'0')}. ${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    const docs = getSavedDocuments();
+    docs.unshift({ id: Date.now().toString(), title, content, date: dateStr, createdAt: now.toISOString(), charCount: content.length, manuscriptCount: (content.length / 200).toFixed(1) });
+    localStorage.setItem('geulmajoong_documents', JSON.stringify(docs));
+    updateSavedCountBadge(); showToast(`"${title}" 글이 내 보관함에 저장되었습니다!`);
 }
 
 function createNewDocument() {
-    if (editorTextarea.value.trim()) {
-        if (!confirm('현재 작성 중인 글이 있습니다. 저장하지 않고 새로 쓰시겠습니까?')) {
-            return;
-        }
-    }
-    documentTitle.value = '';
-    editorTextarea.value = '';
-    localStorage.removeItem('geulmajoong_draft');
-    draftStatusIndicator.classList.remove('active');
-    updateStats();
-    showToast('새 글 작성을 시작합니다.');
-    documentTitle.focus();
+    if (editorTextarea.value.trim() && !confirm('현재 작성 중인 글이 있습니다. 저장하지 않고 새로 쓰시겠습니까?')) return;
+    documentTitle.value = ''; editorTextarea.value = '';
+    localStorage.removeItem('geulmajoong_draft'); draftStatusIndicator.classList.remove('active');
+    updateStats(); showToast('새 글 작성을 시작합니다.'); documentTitle.focus();
 }
 
 function getSavedDocuments() {
-    const stored = localStorage.getItem('geulmajoong_documents');
-    return stored ? JSON.parse(stored) : [];
+    try { return JSON.parse(localStorage.getItem('geulmajoong_documents') || '[]'); } catch { return []; }
 }
+function updateSavedCountBadge() { savedCountBadge.textContent = getSavedDocuments().length; }
+function openStorageModal() { renderStorageItems(); storageModal.classList.add('active'); storageSearchInput.value = ''; }
+function closeStorageModal() { storageModal.classList.remove('active'); }
 
-function updateSavedCountBadge() {
-    const docs = getSavedDocuments();
-    savedCountBadge.textContent = docs.length;
-}
-
-function openStorageModal() {
-    renderStorageItems();
-    storageModal.classList.add('active');
-    storageSearchInput.value = '';
-}
-
-function closeStorageModal() {
-    storageModal.classList.remove('active');
-}
-
-function renderStorageItems(filterQuery = '') {
-    const docs = getSavedDocuments();
-    storageItemsList.innerHTML = '';
-
-    let filtered = docs;
-    if (filterQuery) {
-        const q = filterQuery.toLowerCase();
-        filtered = docs.filter(d => d.title.toLowerCase().includes(q) || d.content.toLowerCase().includes(q));
-    }
-
-    if (filtered.length === 0) {
-        storageItemsList.innerHTML = `
-            <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">
-                ${filterQuery ? '검색 결과에 맞는 저장된 글이 없습니다.' : '아직 저장된 글이 없습니다. 새로운 글을 작성해 보세요!'}
-            </p>
-        `;
-        return;
-    }
-
-    filtered.forEach(doc => {
-        const itemCard = document.createElement('div');
-        itemCard.className = 'storage-item-card';
-        itemCard.innerHTML = `
+function renderStorageItems(q = '') {
+    let docs = getSavedDocuments();
+    if (q) { const lq = q.toLowerCase(); docs = docs.filter(d => d.title.toLowerCase().includes(lq) || d.content.toLowerCase().includes(lq)); }
+    storageItemsList.innerHTML = docs.length === 0
+        ? `<p style="text-align:center;color:var(--text-muted);padding:40px 0;">${q ? '검색 결과에 맞는 저장된 글이 없습니다.' : '아직 저장된 글이 없습니다. 새로운 글을 작성해 보세요!'}</p>`
+        : '';
+    docs.forEach(doc => {
+        const card = document.createElement('div');
+        card.className = 'storage-item-card';
+        card.innerHTML = `
             <div class="storage-item-header">
                 <span class="storage-item-title">${escapeHtml(doc.title)}</span>
                 <span class="storage-item-date">${doc.date}</span>
@@ -1044,109 +759,62 @@ function renderStorageItems(filterQuery = '') {
             <div class="storage-item-footer">
                 <span class="storage-item-stats">공백 포함 ${doc.charCount.toLocaleString()}자 | 원고지 ${doc.manuscriptCount}장</span>
                 <div class="storage-item-actions">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openViewModal('${doc.id}')">
-                        <i data-lucide="eye" style="width: 14px; height: 14px;"></i> 읽기
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openViewModal('${doc.id}')">
+                        <i data-lucide="eye" style="width:14px;height:14px;"></i> 읽기
                     </button>
-                    <button type="button" class="btn-icon-danger" onclick="event.stopPropagation(); deleteDocument('${doc.id}')" title="삭제">
-                        <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                    <button type="button" class="btn-icon-danger" onclick="event.stopPropagation();deleteDocument('${doc.id}')" title="삭제">
+                        <i data-lucide="trash-2" style="width:14px;height:14px;"></i>
                     </button>
                 </div>
-            </div>
-        `;
-
-        itemCard.addEventListener('click', () => openViewModal(doc.id));
-        storageItemsList.appendChild(itemCard);
+            </div>`;
+        card.addEventListener('click', () => openViewModal(doc.id));
+        storageItemsList.appendChild(card);
     });
-
     if (window.lucide) lucide.createIcons();
 }
 
 window.deleteDocument = function(id) {
     if (confirm('이 글을 보관함에서 완전 삭제하시겠습니까?')) {
-        let docs = getSavedDocuments();
-        docs = docs.filter(d => d.id !== id);
-        localStorage.setItem('geulmajoong_documents', JSON.stringify(docs));
-        updateSavedCountBadge();
-        renderStorageItems(storageSearchInput.value.trim());
-        showToast('글이 삭제되었습니다.');
+        localStorage.setItem('geulmajoong_documents', JSON.stringify(getSavedDocuments().filter(d => d.id !== id)));
+        updateSavedCountBadge(); renderStorageItems(storageSearchInput.value.trim()); showToast('글이 삭제되었습니다.');
     }
 };
 
 window.openViewModal = function(id) {
-    const docs = getSavedDocuments();
-    const doc = docs.find(d => d.id === id);
+    const doc = getSavedDocuments().find(d => d.id === id);
     if (!doc) return;
-
     currentViewingDoc = doc;
-    viewModalTitle.textContent = doc.title;
-    viewModalDate.textContent = doc.date;
+    viewModalTitle.textContent = doc.title; viewModalDate.textContent = doc.date;
     viewModalStats.textContent = `공백 포함 ${doc.charCount.toLocaleString()}자 | 원고지 ${doc.manuscriptCount}장`;
-    viewModalContent.textContent = doc.content;
-
-    viewModal.classList.add('active');
+    viewModalContent.textContent = doc.content; viewModal.classList.add('active');
 };
 
-function closeViewModal() {
-    viewModal.classList.remove('active');
-    currentViewingDoc = null;
-}
+function closeViewModal() { viewModal.classList.remove('active'); currentViewingDoc = null; }
 
 function loadCurrentViewingIntoEditor() {
     if (!currentViewingDoc) return;
-
-    if (editorTextarea.value.trim()) {
-        if (!confirm('현재 작성 중인 에디터의 내용이 덮어씌워집니다. 진행하시겠습니까?')) {
-            return;
-        }
-    }
-
-    documentTitle.value = currentViewingDoc.title;
-    editorTextarea.value = currentViewingDoc.content;
-    updateStats();
-    triggerAutoSaveDraft();
-
-    closeViewModal();
-    closeStorageModal();
-    showToast(`"${currentViewingDoc.title}" 글을 에디터로 불러왔습니다.`);
-    editorTextarea.focus();
+    if (editorTextarea.value.trim() && !confirm('현재 작성 중인 에디터의 내용이 덮어씌워집니다. 진행하시겠습니까?')) return;
+    documentTitle.value = currentViewingDoc.title; editorTextarea.value = currentViewingDoc.content;
+    updateStats(); triggerAutoSaveDraft(); closeViewModal(); closeStorageModal();
+    showToast(`"${currentViewingDoc.title}" 글을 에디터로 불러왔습니다.`); editorTextarea.focus();
 }
 
 function exportCurrentViewingAsTxt() {
     if (!currentViewingDoc) return;
-
     const title = currentViewingDoc.title || '글마중_작성글';
-    const content = `${currentViewingDoc.title}\n작성일: ${currentViewingDoc.date}\n-----------------------------------\n\n${currentViewingDoc.content}`;
-    
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${title.replace(/[\\/:*?"<>|]/g, '_')}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    showToast('텍스트(.txt) 파일로 다운로드되었습니다!');
+    const blob = new Blob([`${title}\n작성일: ${currentViewingDoc.date}\n---\n\n${currentViewingDoc.content}`], { type: 'text/plain;charset=utf-8' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `${title.replace(/[\\/:*?"<>|]/g, '_')}.txt` });
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href); showToast('텍스트(.txt) 파일로 다운로드되었습니다!');
 }
 
 let toastTimer = null;
 function showToast(msg) {
-    toastMessage.textContent = msg;
-    toastNotification.classList.add('show');
-
+    toastMessage.textContent = msg; toastNotification.classList.add('show');
     if (toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-        toastNotification.classList.remove('show');
-    }, 2800);
+    toastTimer = setTimeout(() => toastNotification.classList.remove('show'), 2800);
 }
 
 function escapeHtml(str) {
-    if (!str) return '';
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
